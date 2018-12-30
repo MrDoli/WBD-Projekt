@@ -107,8 +107,8 @@ ALTER TABLE "Samochody" ADD CONSTRAINT "Unique_Identifier10" PRIMARY KEY ("ID_Sa
 
 CREATE TABLE "Uslugi"(
   "ID_Uslugi" Integer NOT NULL,
-  "Rodzaj_uslugi" Varchar2(30 ) DEFAULT Rodzaj_uslugi in ('Leasingi', 'Sprzedaze_samochodow', 'Jazdy_probne', 'Ubezpieczenia')
- NOT NULL,
+  "Rodzaj_uslugi" Varchar2(30 ) NOT NULL
+        CHECK ("Rodzaj_uslugi" in ('Leasingi', 'Sprzedaze_samochodow', 'Jazdy_probne', 'Ubezpieczenia')),
   "ID_Klienta" Integer NOT NULL
 )
 /
