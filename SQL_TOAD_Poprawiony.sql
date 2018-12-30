@@ -1,6 +1,6 @@
-﻿/*
+/*
 Created: 2018-12-12
-Modified: 2018-12-30
+Modified: 2018-12-15
 Model: Logical model
 Database: Oracle 11g Release 2
 */
@@ -75,7 +75,7 @@ CREATE TABLE "Klienci"(
   "Numer_telefonu" Varchar2(12 ) NOT NULL,
   "email" Varchar2(45 ) NOT NULL,
   "Pesel" Varchar2(11 ),
-  "ID_adresu" Integer
+  "ID_adresu" Integer NOT NULL
 )
 /
 
@@ -104,19 +104,19 @@ ALTER TABLE "Samochody" ADD CONSTRAINT "Unique_Identifier10" PRIMARY KEY ("ID_Sa
 /
 
 -- Table Uslugi
-
 CREATE TABLE "Uslugi"(
   "ID_Uslugi" Integer NOT NULL,
-  "Rodzaj_uslugi" Varchar2(30 ) DEFAULT Rodzaj_uslugi in ('Leasingi', 'Sprzedaze_samochodow', 'Jazdy_probne', 'Ubezpieczenia')
- NOT NULL,
+  "Rodzaj_uslugi" Varchar2(40 ) NOT NULL,
   "ID_Klienta" Integer NOT NULL
 )
 /
 
 -- Add keys for table Uslugi
 
-ALTER TABLE "Uslugi" ADD CONSTRAINT "Unique_Identifier11" PRIMARY KEY ("ID_Uslugi")
+ALTER TABLE "Uslugi" ADD CONSTRAINT "Unique_Identifier11" PRIMARY KEY ("ID_Uslugi","ID_Klienta")
 /
+
+ALTER TABLE "Uslugi" ADD CONSTRAINT "Dziedzina" CHECK("Rodzaj_uslugi" in ('Leasingi', 'Sprzedaze_samochodow', 'Jazdy_probne', 'Ubezpieczenia'));
 
 -- Table Jazdy_probne
 
@@ -124,7 +124,8 @@ CREATE TABLE "Jazdy_probne"(
   "ID_Uslugi" Integer NOT NULL,
   "Data" Date NOT NULL,
   "Czas_trwania" Date NOT NULL,
-  "Przejechane_km" Integer NOT NULL
+  "Przejechane_km" Integer NOT NULL,
+  "ID_Klienta" Integer NOT NULL
 )
 /
 
@@ -134,7 +135,8 @@ CREATE TABLE "Ubezpieczenia"(
   "ID_Uslugi" Integer NOT NULL,
   "Typ" Varchar2(20 ) NOT NULL,
   "Data_wykupienia" Date NOT NULL,
-  "Data_wygasniecia" Date NOT NULL
+  "Data_wygasniecia" Date NOT NULL,
+  "ID_Klienta" Integer NOT NULL
 )
 /
 
@@ -146,13 +148,14 @@ CREATE TABLE "Leasingi"(
   "Data_podpisania_umowy" Date NOT NULL,
   "Data_wygasniecia" Date NOT NULL,
   "Wartosc" Number(10,2) NOT NULL,
-  "Rata" Number(10,2) NOT NULL
+  "Rata" Number(10,2) NOT NULL,
+  "ID_Klienta" Integer NOT NULL
 )
 /
 
 -- Add keys for table Leasingi
 
-ALTER TABLE "Leasingi" ADD CONSTRAINT "Unique_Identifier18" PRIMARY KEY ("ID_Uslugi")
+ALTER TABLE "Leasingi" ADD CONSTRAINT "Unique_Identifier18" PRIMARY KEY ("ID_Uslugi","ID_Klienta")
 /
 
 -- Table Sprzedaze_samochodow
@@ -160,7 +163,8 @@ ALTER TABLE "Leasingi" ADD CONSTRAINT "Unique_Identifier18" PRIMARY KEY ("ID_Usl
 CREATE TABLE "Sprzedaze_samochodow"(
   "ID_Uslugi" Integer NOT NULL,
   "Data" Date NOT NULL,
-  "Cena" Float(126) NOT NULL
+  "Cena" Float(126) NOT NULL,
+  "ID_Klienta" Integer NOT NULL
 )
 /
 
@@ -265,7 +269,8 @@ CREATE TABLE "Transakcje"(
 
 CREATE TABLE "Salony_Samochodowe_Uslugi"(
   "ID_Uslugi" Integer NOT NULL,
-  "ID_Salonu" Integer NOT NULL
+  "ID_Salonu" Integer NOT NULL,
+  "ID_Klienta" Integer NOT NULL
 )
 /
 
@@ -289,7 +294,8 @@ CREATE TABLE "Salony_Samochodowe_Fabryki"(
 
 CREATE TABLE "Samochody_Uslugi"(
   "ID_Samochodu" Integer NOT NULL,
-  "ID_Uslugi" Integer NOT NULL
+  "ID_Uslugi" Integer NOT NULL,
+  "ID_Klienta" Integer NOT NULL
 )
 /
 
@@ -301,7 +307,7 @@ CREATE TABLE "Wlasciciele"(
   "Nazwisko" Varchar2(30 ) NOT NULL,
   "Pesel" Varchar2(11 ),
   "Ilosc salonow" Integer NOT NULL,
-  "ID_Salonu" Integer
+  "ID_Salonu" Integer NOT NULL
 )
 /
 
@@ -357,19 +363,19 @@ ALTER TABLE "Salony_Samochodowe_Samochody" ADD CONSTRAINT "Posiada_samochod_Samo
 /
 
 
-ALTER TABLE "Sprzedaze_samochodow" ADD CONSTRAINT "Uslugi Sprzedaze samochodow" FOREIGN KEY ("ID_Uslugi") REFERENCES "Uslugi" ("ID_Uslugi")
+ALTER TABLE "Sprzedaze_samochodow" ADD CONSTRAINT "Uslugi Sprzedaze samochodow" FOREIGN KEY ("ID_Uslugi", "ID_Klienta") REFERENCES "Uslugi" ("ID_Uslugi", "ID_Klienta")
 /
 
 
-ALTER TABLE "Jazdy_probne" ADD CONSTRAINT "Uslugi Jazdy probne" FOREIGN KEY ("ID_Uslugi") REFERENCES "Uslugi" ("ID_Uslugi")
+ALTER TABLE "Jazdy_probne" ADD CONSTRAINT "Uslugi Jazdy probne" FOREIGN KEY ("ID_Uslugi", "ID_Klienta") REFERENCES "Uslugi" ("ID_Uslugi", "ID_Klienta")
 /
 
 
-ALTER TABLE "Ubezpieczenia" ADD CONSTRAINT "Uslugi ubezpieczenia" FOREIGN KEY ("ID_Uslugi") REFERENCES "Uslugi" ("ID_Uslugi")
+ALTER TABLE "Ubezpieczenia" ADD CONSTRAINT "Uslugi ubezpieczenia" FOREIGN KEY ("ID_Uslugi", "ID_Klienta") REFERENCES "Uslugi" ("ID_Uslugi", "ID_Klienta")
 /
 
 
-ALTER TABLE "Leasingi" ADD CONSTRAINT "Relationship7" FOREIGN KEY ("ID_Uslugi") REFERENCES "Uslugi" ("ID_Uslugi")
+ALTER TABLE "Leasingi" ADD CONSTRAINT "Relationship7" FOREIGN KEY ("ID_Uslugi", "ID_Klienta") REFERENCES "Uslugi" ("ID_Uslugi", "ID_Klienta")
 /
 
 
@@ -379,6 +385,7 @@ ALTER TABLE "Wlasciciele" ADD CONSTRAINT "Posiada Salon Samochodowy" FOREIGN KEY
 
 ALTER TABLE "Adresy" ADD CONSTRAINT "Mieszka" FOREIGN KEY ("ID Wlasciel") REFERENCES "Wlasciciele" ("ID Wlasciel")
 /
+
 
 
 
