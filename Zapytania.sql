@@ -1,0 +1,1 @@
+SELECT * FROM "Adresy" WHERE "Miejscowosc" = 'Warszawa';

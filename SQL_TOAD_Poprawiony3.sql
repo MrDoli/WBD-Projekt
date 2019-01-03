@@ -1,4 +1,4 @@
-/*
+﻿/*
 Created: 12.12.2018
 Modified: 03.01.2019
 Model: Logical model
@@ -237,7 +237,8 @@ CREATE TABLE "Adresy"(
   "Numer_lokalu" Integer,
   "Kod_pocztowy" Varchar2(10 ) NOT NULL,
   "Miejscowosc" Varchar2(30 ) NOT NULL,
-  "Kraj" Varchar2(30 ) NOT NULL
+  "Kraj" Varchar2(30 ) NOT NULL,
+  "ID Wlasciel" Integer NOT NULL
 )
 /
 
@@ -308,14 +309,8 @@ CREATE TABLE "Wlasciciele"(
   "Nazwisko" Varchar2(30 ) NOT NULL,
   "Pesel" Varchar2(11 ),
   "Ilosc salonow" Integer NOT NULL,
-  "ID_Salonu" Integer,
-  "ID_adresu" Integer NOT NULL
+  "ID_Salonu" Integer
 )
-/
-
--- Create indexes for table Wlasciciele
-
-CREATE INDEX "IX_Relationship2" ON "Wlasciciele" ("ID_adresu")
 /
 
 -- Add keys for table Wlasciciele
@@ -350,7 +345,7 @@ ALTER TABLE "Leasingi" ADD CONSTRAINT "Udziela" FOREIGN KEY ("ID_leasingodawcy")
 /
 
 
-ALTER TABLE "Modele" ADD CONSTRAINT "Nale�a Do" FOREIGN KEY ("ID_marki_modelu") REFERENCES "Marki modeli" ("ID_marki_modelu")
+ALTER TABLE "Modele" ADD CONSTRAINT "Należa Do" FOREIGN KEY ("ID_marki_modelu") REFERENCES "Marki modeli" ("ID_marki_modelu")
 /
 
 
@@ -390,11 +385,11 @@ ALTER TABLE "Wlasciciele" ADD CONSTRAINT "Posiada Salon Samochodowy" FOREIGN KEY
 /
 
 
-ALTER TABLE "Modele" ADD CONSTRAINT "Produkuje" FOREIGN KEY ("ID fabryki") REFERENCES "Fabryki" ("ID fabryki")
+ALTER TABLE "Adresy" ADD CONSTRAINT "Mieszka" FOREIGN KEY ("ID Wlasciel") REFERENCES "Wlasciciele" ("ID Wlasciel")
 /
 
 
-ALTER TABLE "Wlasciciele" ADD CONSTRAINT "Mieszka" FOREIGN KEY ("ID_adresu") REFERENCES "Adresy" ("ID_adresu")
+ALTER TABLE "Modele" ADD CONSTRAINT "Produkuje" FOREIGN KEY ("ID fabryki") REFERENCES "Fabryki" ("ID fabryki")
 /
 
 
