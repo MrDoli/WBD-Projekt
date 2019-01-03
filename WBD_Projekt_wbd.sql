@@ -12,6 +12,7 @@ Database: Oracle 11g Release 2
 
 CREATE TABLE "Salony_Samochodowe"(
   "ID_Salonu" Integer NOT NULL,
+  "Nazwa" Varchar2(50 ) NOT NULL,
   "Data_zalozenia" Date NOT NULL,
   "Powierzchnia" Integer NOT NULL
         CONSTRAINT "ValidValuesPowierzchnia" CHECK (("Powierzchnia" >= 0)),
@@ -246,18 +247,18 @@ CREATE TABLE "Adresy"(
 ALTER TABLE "Adresy" ADD CONSTRAINT "Unique_Identifier24" PRIMARY KEY ("ID_adresu")
 /
 
--- Table Marki modeli
+-- Table Marki_modeli
 
-CREATE TABLE "Marki modeli"(
+CREATE TABLE "Marki_modeli"(
   "ID_marki_modelu" Integer NOT NULL,
   "Model" Varchar2(30 ) NOT NULL,
   "Marka" Varchar2(20 ) NOT NULL
 )
 /
 
--- Add keys for table Marki modeli
+-- Add keys for table Marki_modeli
 
-ALTER TABLE "Marki modeli" ADD CONSTRAINT "Unique_Identifier25" PRIMARY KEY ("ID_marki_modelu")
+ALTER TABLE "Marki_modeli" ADD CONSTRAINT "Unique_Identifier25" PRIMARY KEY ("ID_marki_modelu")
 /
 
 -- Table Salony_Samochodowe_Klienci
@@ -313,11 +314,6 @@ CREATE TABLE "Wlasciciele"(
 )
 /
 
--- Create indexes for table Wlasciciele
-
-CREATE INDEX "IX_Relationship2" ON "Wlasciciele" ("ID_adresu")
-/
-
 -- Add keys for table Wlasciciele
 
 ALTER TABLE "Wlasciciele" ADD CONSTRAINT "PK_Wlasciciele" PRIMARY KEY ("ID Wlasciel")
@@ -350,7 +346,7 @@ ALTER TABLE "Leasingi" ADD CONSTRAINT "Udziela" FOREIGN KEY ("ID_leasingodawcy")
 /
 
 
-ALTER TABLE "Modele" ADD CONSTRAINT "Nale¿a Do" FOREIGN KEY ("ID_marki_modelu") REFERENCES "Marki modeli" ("ID_marki_modelu")
+ALTER TABLE "Modele" ADD CONSTRAINT "Nale¿a Do" FOREIGN KEY ("ID_marki_modelu") REFERENCES "Marki_modeli" ("ID_marki_modelu")
 /
 
 
