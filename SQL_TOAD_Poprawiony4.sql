@@ -1,4 +1,4 @@
-/*
+﻿/*
 Created: 12.12.2018
 Modified: 03.01.2019
 Model: Logical model
@@ -350,7 +350,7 @@ ALTER TABLE "Leasingi" ADD CONSTRAINT "Udziela" FOREIGN KEY ("ID_leasingodawcy")
 /
 
 
-ALTER TABLE "Modele" ADD CONSTRAINT "Nale�a Do" FOREIGN KEY ("ID_marki_modelu") REFERENCES "Marki modeli" ("ID_marki_modelu")
+ALTER TABLE "Modele" ADD CONSTRAINT "Należa Do" FOREIGN KEY ("ID_marki_modelu") REFERENCES "Marki modeli" ("ID_marki_modelu")
 /
 
 
