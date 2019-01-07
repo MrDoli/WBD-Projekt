@@ -1,4 +1,4 @@
-SELECT * FROM "Adresy";
+SELECT * FROM "Adresy" JOIN ;
 
 --Wyszukowanie samochodów okreœlonej marki
 SELECT * FROM "Samochody" WHERE "Samochody"."ID_modelu" IN (SELECT "ID_modelu" FROM "Modele" WHERE "Modele"."ID_marki_modelu" IN (SELECT "ID_marki_modelu" FROM "Marki_modeli" WHERE "Marka" = 'BMW'));
