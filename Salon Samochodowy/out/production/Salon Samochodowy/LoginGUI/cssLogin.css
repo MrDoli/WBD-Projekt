@@ -1,4 +1,17 @@
-#button {
-    -fx-background-color: black;
+.button {
+    -fx-background-color: antiquewhite;
+    -fx-background-radius: 15px;
+    -fx-font-size: 16px;
+    -fx-border-radius: 8px;
+    -fx-border-color: blueviolet;
+    -fx-border-style: solid;
+    -fx-border-width: 4px;
 
+}
+
+.button:hover{
+
+    -fx-background-color:#64EE64;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );
+    -fx-text-alignment: center;
 }
