@@ -1,0 +1,23 @@
+#right {
+    -fx-background-color: lightgrey;
+    -fx-pref-width: 220px;
+    -fx-spacing: 10px;
+}
+
+#rightButton {
+    -fx-background-color: skyblue;
+    -fx-font-size: 16px;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 15px;
+}
+
+#buttomButton {
+    -fx-background-color: skyblue;
+    -fx-font-size: 16px;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 15px;
+}
+
+#buttom {
+    -fx-spacing: 50px;
+}

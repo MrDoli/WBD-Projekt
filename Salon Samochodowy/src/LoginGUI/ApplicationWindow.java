@@ -23,8 +23,11 @@ public class ApplicationWindow extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        primaryStage.setScene(new Scene(root, 900, 600));
+        primaryStage.setScene(new Scene(root, 1300, 980));
+        Scene scene = primaryStage.getScene();
+        scene.getStylesheets().add("LoginGUI/cssApplication.css");
         primaryStage.setTitle("Salon samochodowy v1.0");
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }

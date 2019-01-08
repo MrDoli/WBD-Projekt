@@ -12,6 +12,7 @@ public class ApplicationController {
 
     public ApplicationController(){}
 
+    // tu mozna dopisac setowanie szerokosci BorderPane na podsawie szerokosci ekranu z komputera
     @FXML
     private void initialize() {}
 }
