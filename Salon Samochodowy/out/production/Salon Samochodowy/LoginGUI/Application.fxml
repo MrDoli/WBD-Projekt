@@ -5,29 +5,75 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginGUI.ApplicationController">
-   <children>
-      <BorderPane prefHeight="600.0" prefWidth="900.0">
-         <bottom>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-                  <Button mnemonicParsing="false" text="Button" />
-               </children>
-            </HBox>
-         </bottom>
-         <top>
-            <ListView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </top>
-         <center>
-            <Label text="Label" BorderPane.alignment="CENTER">
-               <graphic>
-                  <Label text="Label" />
-               </graphic>
-            </Label>
-         </center></BorderPane>
-   </children>
+    <children>
+        <BorderPane prefHeight="700.0" prefWidth="1365.0">
+            <bottom>
+                <HBox alignment="CENTER" id="buttom" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Button id="buttomButton" mnemonicParsing="false" text="Modyfikuj" />
+                        <Button id="buttomButton" mnemonicParsing="false" text="Dodaj" />
+                        <Button id="buttomButton" mnemonicParsing="false" text="Usuń" />
+                        <Button id="buttomButton" mnemonicParsing="false" text="Zatwierdz" />
+                    </children>
+                </HBox>
+            </bottom>
+            <center>
+                <ListView prefHeight="350.0" prefWidth="1200.0" BorderPane.alignment="CENTER" />
+            </center>
+            <top>
+                <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Label" />
+                        <Label text="Label" GridPane.rowIndex="1" />
+                        <Label text="Label" GridPane.rowIndex="2" />
+                        <Label text="Label" GridPane.rowIndex="3" />
+                        <Label text="Label" GridPane.rowIndex="4" />
+                        <Label text="Label" GridPane.rowIndex="5" />
+                        <Label text="Label" GridPane.rowIndex="6" />
+                        <Label text="Label" GridPane.rowIndex="7" />
+                        <Label text="Label" GridPane.rowIndex="8" />
+                        <Label text="Label" GridPane.rowIndex="9" />
+                    </children>
+                </GridPane>
+            </top>
+            <right>
+                <VBox fx:id="right" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="250.0">
+                    <children>
+                        <Button id="rightButton" mnemonicParsing="false" text="Pracownicy" />
+                        <Button id="rightButton" mnemonicParsing="false" text="Klienci" />
+                        <Button id="rightButton" mnemonicParsing="false" text="Wynagrodzenia" />
+                        <Button id="rightButton" mnemonicParsing="false" text="Fabryka samochodów" />
+                        <Button id="rightButton" mnemonicParsing="false" text="Leasingodawcy" />
+                        <Button id="rightButton" mnemonicParsing="false" text="Salony" />
+                        <Button id="rightButton" mnemonicParsing="false" text="Modele samochdow" />
+                    </children>
+                </VBox>
+            </right>
+            <left>
+            </left>
+        </BorderPane>
+    </children>
 </AnchorPane>
