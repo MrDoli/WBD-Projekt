@@ -11,7 +11,7 @@ public class DBConnection {
     private static final String password = "mdoliche";
     private static final String dbUrl = "jdbc:oracle:thin:@ora3.elka.pw.edu.pl:1521:ora3inf";
 
-    public void connectToDB(Connection connection)
+    public static Connection connectToDB(Connection connection)
     {
         System.out.println("---- Podlaczanie bazy danych Oracle do aplikacji Salon Samochodowy");
         try {
@@ -19,7 +19,7 @@ public class DBConnection {
         } catch(ClassNotFoundException e){
             System.out.println("Nie masz zainstalowanego Oracle JDBC Driver");
             e.printStackTrace();
-            return;
+            return null;
         }
 
         try{
@@ -27,13 +27,15 @@ public class DBConnection {
         } catch (SQLException e){
             System.out.println("Zle dane w polaczeniu do bazy danych");
             e.printStackTrace();
-            return;
+            return null;
         }
 
         if(connection != null){
             System.out.println("Nawiazano polaczenie do bazy danych");
+            return connection;
         } else {
             System.out.println("Polacznie do bazy danych nie powiodlo sie.");
+            return null;
         }
     }
 
