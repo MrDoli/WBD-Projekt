@@ -14,29 +14,33 @@
    <children>
       <TabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <tabs>
-            <Tab text="Untitled Tab 1">
+            <Tab text="Samochody">
                <content>
                   <AnchorPane>
                      <children>
                         <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <center>
-                              <TableView prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="carsTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
                                  <columns>
-                                    <TableColumn prefWidth="200.0" text="C1" />
-                                    <TableColumn prefWidth="200.0" text="C2" />
-                                    <TableColumn prefWidth="200.0" text="Column X" />
-                                    <TableColumn prefWidth="200.0" text="Column X" />
-                                    <TableColumn prefWidth="200.0" text="Column X" />
+                                    <TableColumn fx:id="carId" prefWidth="120.0" text="ID" />
+                                    <TableColumn fx:id="marka" prefWidth="120.0" text="Marka" />
+                                    <TableColumn fx:id="model" prefWidth="120.0" text="Model" />
+                                    <TableColumn fx:id="status" prefWidth="120.0" text="Status" />
+                                    <TableColumn fx:id="naSprzedaz" prefWidth="120.0" text="Na sprzedaż" />
+                                    <TableColumn fx:id="doJazdyProbnej" prefWidth="120.0" text="Do jazdy próbnej" />
+                                    <TableColumn fx:id="przebieg" prefWidth="120.0" text="Przebieg" />
+                                    <TableColumn fx:id="netto" prefWidth="120.0" text="Cena netto" />
+                                    <TableColumn fx:id="brutto" prefWidth="120.0" text="Cena brutto" />
                                  </columns>
                               </TableView>
                            </center>
                            <bottom>
                               <ButtonBar BorderPane.alignment="CENTER">
                                 <buttons>
-                                  <Button mnemonicParsing="false" text="Anuluj" />
-                                    <Button mnemonicParsing="false" text="Modyfikuj" />
-                                    <Button layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" text="Usuń" />
-                                    <Button layoutX="960.0" layoutY="10.0" mnemonicParsing="false" text="Dodaj" />
+                                    <Button fx:id="editButton" mnemonicParsing="false" text="Edytuj" />
+                                    <Button fx:id="deleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" text="Usuń" />
+                                    <Button fx:id="addButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" text="Dodaj" />
+                                  <Button fx:id="cancelButton" mnemonicParsing="false" text="Anuluj" />
                                 </buttons>
                                  <BorderPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -51,9 +55,44 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Untitled Tab 2">
+            <Tab text="Pracownicy">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0">
+                           <center>
+                              <TableView fx:id="employeeTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="employeeId" prefWidth="120.0" text="ID" />
+                                    <TableColumn fx:id="imie" prefWidth="120.0" text="Imie" />
+                                    <TableColumn fx:id="nazwisko" prefWidth="120.0" text="Nazwisko" />
+                                    <TableColumn fx:id="stanowisko" prefWidth="120.0" text="Stanowisko" />
+                                    <TableColumn fx:id="numerTel" prefWidth="120.0" text="Numer telefonu" />
+                                    <TableColumn fx:id="email" prefWidth="120.0" text="Email" />
+                                    <TableColumn fx:id="adres" prefWidth="120.0" text="Adres" />
+                                    <TableColumn fx:id="dataZatrudnienia" prefWidth="120.0" text="Data zatrudnienia" />
+                                    <TableColumn fx:id="koniecUmowy" prefWidth="120.0" text="Koniec umowy" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <ButtonBar BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="editButton1" mnemonicParsing="false" text="Edytuj" />
+                                    <Button fx:id="deleteButton1" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" text="Usuń" />
+                                    <Button fx:id="addButton1" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" text="Dodaj" />
+                                    <Button fx:id="cancelButton1" mnemonicParsing="false" text="Anuluj" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ButtonBar>
+                           </bottom>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </BorderPane>
+                     </children></AnchorPane>
                </content>
             </Tab>
          </tabs>

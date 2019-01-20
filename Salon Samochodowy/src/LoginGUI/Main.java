@@ -14,18 +14,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tables.fxml"));
         Parent root = (Parent) fxmlLoader.load();
-        primaryStage.setScene(new Scene(root, 300, 350));
+        primaryStage.setScene(new Scene(root, 1200, 800));
         Scene scene = primaryStage.getScene();
-        scene.getStylesheets().add("LoginGUI/cssLogin.css");
+        //scene.getStylesheets().add("LoginGUI/cssLogin.css");
         primaryStage.setTitle("Salon samochodowy v1.0");
         primaryStage.show();
     }
 
     public static void main(String[] args) {
-        DBConnection dbConnection = new DBConnection();
-        dbConnection.connectToDB(connection);
+        //DBConnection dbConnection = new DBConnection();
+       // dbConnection.connectToDB(connection);
         launch(args);
     }
 }
