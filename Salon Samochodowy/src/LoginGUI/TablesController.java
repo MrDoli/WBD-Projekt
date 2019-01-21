@@ -4,12 +4,21 @@ package LoginGUI;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 
+import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -42,6 +51,17 @@ public class TablesController {
     @FXML private TableColumn<Employee, String> email;
     @FXML private TableColumn<Employee, String> adres;
 
+    @FXML private TableView<Customer> customerTableView;
+    @FXML private TableColumn<Customer, Integer> customerId;
+    @FXML private TableColumn<Customer, String> customerImie;
+    @FXML private TableColumn<Customer, String> customerNazwisko;
+    @FXML private TableColumn<Customer, Integer> customerRabat;
+    @FXML private TableColumn<Customer, String> customerNumerTel;
+    @FXML private TableColumn<Customer, String> customerEmail;
+    @FXML private TableColumn<Customer, String> customerPesel;
+    @FXML private TableColumn<Customer, String> customerAdres;
+
+
 
     private DBManager dbManager = new DBManager();
 
@@ -52,6 +72,24 @@ public class TablesController {
     private void getEmployees(){
         ObservableList<Employee> employees = FXCollections.observableArrayList(dbManager.getEmployees());
         employeeTableView.setItems(employees);
+    }
+    private void getCustomers(){
+        ObservableList<Customer> customers = FXCollections.observableArrayList(dbManager.getCustomers());
+        customerTableView.setItems(customers);
+    }
+
+    @FXML
+    private void openCarEditWindow(ActionEvent event) throws IOException{
+        System.out.print("dziala");
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("EditCars.fxml"));
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        stage.showAndWait();
     }
 
     @FXML
@@ -77,8 +115,17 @@ public class TablesController {
         email.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getEmail()));
         adres.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAdres()));
 
+        customerId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        customerImie.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getImie()));
+        customerNazwisko.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNazwisko()));
+        customerRabat.setCellValueFactory(cellData -> cellData.getValue().rabatProperty().asObject());
+        customerNumerTel.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNumerTel()));
+        customerEmail.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getEmail()));
+        customerPesel.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPesel()));
+        customerAdres.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAdres()));
 
         getCars();
         getEmployees();
+        getCustomers();
     }
 }
