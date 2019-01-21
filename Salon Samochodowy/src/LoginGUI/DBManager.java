@@ -11,6 +11,7 @@ public class DBManager {
     private PreparedStatement insertBrand_ModelStatement;
     private PreparedStatement selectEmployeeStatement;
     private PreparedStatement insertEmployeeStatement;
+    private PreparedStatement selectCustomerStatement;
     private PreparedStatement selectAddressStatement;
     private PreparedStatement insertAddressStatement;
     private PreparedStatement selectShowroom_CarStatement;
@@ -25,6 +26,7 @@ public class DBManager {
             selectBrand_ModelStatement = connection.prepareStatement("select * from \"Marki_modeli\" where \"ID_marki_modelu\" = ?");
             selectAddressStatement = connection.prepareStatement("select * from \"Adresy\" where \"ID_adresu\" = ?");
             selectEmployeeStatement = connection.prepareStatement("select * from \"Pracownicy\"");
+            selectCustomerStatement = connection.prepareStatement("select * from \"Klienci\"");
             //insertCarStatement  = connection.prepareStatement("insert into pacjenci (id, status, nas) values(?,?,?,?,?)");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,6 +100,44 @@ public class DBManager {
             e.printStackTrace();
         }
         return employees;
+    }
+    public ArrayList<Customer> getCustomers(){
+        ArrayList<Customer> customers = new ArrayList<>();
+        try {
+            ResultSet rs = selectCustomerStatement.executeQuery();
+            while (rs.next()) {
+                Integer id = rs.getInt(1);
+                String imie = rs.getString(2);
+                String nazwisko = rs.getString(3);
+                Integer rabat = rs.getInt(4);
+                String numerTel = rs.getString(5);
+                String email = rs.getString(6);
+                String pesel = rs.getString(7);
+                Integer idAdresu = rs.getInt(8);
+                selectAddressStatement.setInt(1,idAdresu);
+                ResultSet rs2 = selectAddressStatement.executeQuery();
+                String ulica = "";
+                String miejscowosc = "";
+                String kod = "";
+                String kraj = "";
+                Integer nrBudynku = 0;
+                Integer nrLokalu = 0;
+                while(rs2.next()){
+                    ulica = rs2.getString(2);
+                    nrBudynku = rs2.getInt(3);
+                    nrLokalu = rs2.getInt(4);
+                    kod = rs2.getString(5);
+                    miejscowosc = rs2.getString(6);
+                    kraj = rs2.getString(7);
+                }
+                String adres = ulica+' '+nrBudynku+'/'+nrLokalu+' '+kod+' '+miejscowosc+' '+kraj;
+                customers.add(new Customer(id,imie,nazwisko,rabat,numerTel,email,pesel,adres));
+            }
+            rs.close();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return customers;
     }
 
 }

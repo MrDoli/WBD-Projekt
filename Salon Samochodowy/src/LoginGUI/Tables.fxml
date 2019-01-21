@@ -22,7 +22,7 @@
                            <center>
                               <TableView fx:id="carsTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
                                  <columns>
-                                    <TableColumn fx:id="carId" prefWidth="120.0" text="ID" />
+                                    <TableColumn fx:id="carId" prefWidth="40.0" text="ID" />
                                     <TableColumn fx:id="marka" prefWidth="120.0" text="Marka" />
                                     <TableColumn fx:id="model" prefWidth="120.0" text="Model" />
                                     <TableColumn fx:id="status" prefWidth="120.0" text="Status" />
@@ -39,7 +39,7 @@
                                 <buttons>
                                     <Button fx:id="editButton" mnemonicParsing="false" text="Edytuj" />
                                     <Button fx:id="deleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" text="Usuń" />
-                                    <Button fx:id="addButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" text="Dodaj" />
+                                    <Button fx:id="addButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#openCarEditWindow" text="Dodaj" />
                                   <Button fx:id="cancelButton" mnemonicParsing="false" text="Anuluj" />
                                 </buttons>
                                  <BorderPane.margin>
@@ -63,13 +63,13 @@
                            <center>
                               <TableView fx:id="employeeTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
                                  <columns>
-                                    <TableColumn fx:id="employeeId" prefWidth="120.0" text="ID" />
+                                    <TableColumn fx:id="employeeId" prefWidth="40.0" text="ID" />
                                     <TableColumn fx:id="imie" prefWidth="120.0" text="Imie" />
                                     <TableColumn fx:id="nazwisko" prefWidth="120.0" text="Nazwisko" />
                                     <TableColumn fx:id="stanowisko" prefWidth="120.0" text="Stanowisko" />
                                     <TableColumn fx:id="numerTel" prefWidth="120.0" text="Numer telefonu" />
                                     <TableColumn fx:id="email" prefWidth="120.0" text="Email" />
-                                    <TableColumn fx:id="adres" prefWidth="120.0" text="Adres" />
+                                    <TableColumn fx:id="adres" prefWidth="300.0" text="Adres" />
                                     <TableColumn fx:id="dataZatrudnienia" prefWidth="120.0" text="Data zatrudnienia" />
                                     <TableColumn fx:id="koniecUmowy" prefWidth="120.0" text="Koniec umowy" />
                                  </columns>
@@ -93,6 +93,46 @@
                            </padding>
                         </BorderPane>
                      </children></AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Klienci">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0">
+                           <center>
+                              <TableView fx:id="customerTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="customerId" prefWidth="40.0" text="ID" />
+                                    <TableColumn fx:id="customerImie" prefWidth="120.0" text="Imie" />
+                                    <TableColumn fx:id="customerNazwisko" prefWidth="120.0" text="Nazwisko" />
+                                    <TableColumn fx:id="customerAdres" prefWidth="300.0" text="Adres" />
+                                    <TableColumn fx:id="customerNumerTel" prefWidth="120.0" text="Numer telefonu" />
+                                    <TableColumn fx:id="customerEmail" prefWidth="120.0" text="Email" />
+                                    <TableColumn fx:id="customerPesel" prefWidth="120.0" text="PESEL" />
+                                    <TableColumn fx:id="customerRabat" prefWidth="120.0" text="Rabat" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <ButtonBar BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="editButton11" mnemonicParsing="false" text="Edytuj" />
+                                    <Button fx:id="deleteButton11" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" text="Usuń" />
+                                    <Button fx:id="addButton11" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" text="Dodaj" />
+                                    <Button fx:id="cancelButton11" mnemonicParsing="false" text="Anuluj" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ButtonBar>
+                           </bottom>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
          </tabs>
