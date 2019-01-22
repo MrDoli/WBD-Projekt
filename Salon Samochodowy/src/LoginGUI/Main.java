@@ -13,7 +13,7 @@ public class Main extends Application {
     static Connection connection;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Tables.fxml"));
         Parent root = (Parent) fxmlLoader.load();
         primaryStage.setScene(new Scene(root, 1200, 800));
@@ -25,7 +25,7 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         //DBConnection dbConnection = new DBConnection();
-       // dbConnection.connectToDB(connection);
+        // dbConnection.connectToDB(connection);
         launch(args);
     }
 }

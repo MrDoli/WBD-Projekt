@@ -20,26 +20,30 @@
                      <children>
                         <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <center>
-                              <TableView fx:id="carsTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
+                              <TableView fx:id="carsTableView" BorderPane.alignment="CENTER">
                                  <columns>
                                     <TableColumn fx:id="carId" prefWidth="40.0" text="ID" />
-                                    <TableColumn fx:id="marka" prefWidth="120.0" text="Marka" />
-                                    <TableColumn fx:id="model" prefWidth="120.0" text="Model" />
-                                    <TableColumn fx:id="status" prefWidth="120.0" text="Status" />
-                                    <TableColumn fx:id="naSprzedaz" prefWidth="120.0" text="Na sprzedaż" />
-                                    <TableColumn fx:id="doJazdyProbnej" prefWidth="120.0" text="Do jazdy próbnej" />
-                                    <TableColumn fx:id="przebieg" prefWidth="120.0" text="Przebieg" />
-                                    <TableColumn fx:id="netto" prefWidth="120.0" text="Cena netto" />
-                                    <TableColumn fx:id="brutto" prefWidth="120.0" text="Cena brutto" />
+                                    <TableColumn fx:id="marka" prefWidth="95.0" text="Marka" />
+                                    <TableColumn fx:id="model" prefWidth="95.0" text="Model" />
+                                    <TableColumn fx:id="naped" prefWidth="95.0" text="Napęd" />
+                                    <TableColumn fx:id="pojemnosc" prefWidth="95.0" text="Pojemność silnika" />
+                                    <TableColumn fx:id="wersjaWyposazenia" prefWidth="95.0" text="Wersja Wyposażenia" />
+                                    <TableColumn fx:id="rokProdukcji" prefWidth="104.0" text="Rok produkcji" />
+                                    <TableColumn fx:id="status" prefWidth="95.0" text="Status" />
+                                    <TableColumn fx:id="naSprzedaz" prefWidth="90.0" text="Na sprzedaż" />
+                                    <TableColumn fx:id="doJazdyProbnej" prefWidth="100.0" text="Do jazdy próbnej" />
+                                    <TableColumn fx:id="przebieg" prefWidth="95.0" text="Przebieg" />
+                                    <TableColumn fx:id="netto" prefWidth="95.0" text="Cena netto" />
+                                    <TableColumn fx:id="brutto" prefWidth="95.0" text="Cena brutto" />
                                  </columns>
                               </TableView>
                            </center>
                            <bottom>
                               <ButtonBar BorderPane.alignment="CENTER">
                                 <buttons>
-                                    <Button fx:id="editButton" mnemonicParsing="false" text="Edytuj" />
-                                    <Button fx:id="deleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" text="Usuń" />
-                                    <Button fx:id="addButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#openCarEditWindow" text="Dodaj" />
+                                    <Button fx:id="carEditButton" mnemonicParsing="false" onAction="#editCar" text="Edytuj" />
+                                    <Button fx:id="carDeleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteCar" text="Usuń" />
+                                    <Button fx:id="carAddButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#addCar" text="Dodaj" />
                                   <Button fx:id="cancelButton" mnemonicParsing="false" text="Anuluj" />
                                 </buttons>
                                  <BorderPane.margin>
@@ -57,9 +61,9 @@
             </Tab>
             <Tab text="Pracownicy">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane>
                      <children>
-                        <BorderPane prefHeight="667.0" prefWidth="1200.0">
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <center>
                               <TableView fx:id="employeeTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
                                  <columns>
@@ -99,7 +103,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BorderPane prefHeight="667.0" prefWidth="1200.0">
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <center>
                               <TableView fx:id="customerTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
                                  <columns>
