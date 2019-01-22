@@ -135,6 +135,10 @@ public class TablesController {
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
         Stage stage = new Stage();
+
+        EditCarsController editCarsController = loader.getController();
+        editCarsController.edit("Honda", "Civic","Nowy", "T", "T",80000,45000,30000);
+
         stage.setScene(scene);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());

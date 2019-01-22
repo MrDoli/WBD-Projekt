@@ -2,6 +2,7 @@ package LoginGUI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -34,6 +35,8 @@ public class EditCarsController {
     @FXML
     private TextField brutto;
 
+
+    // TODO Edit do usuniecia na moje
     @FXML
     public void edit(String marka, String model, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
         this.marka.setText(marka);
@@ -47,6 +50,22 @@ public class EditCarsController {
         else this.naSprzedaz.setSelected(false);
         if (doJazdyProbnej.equals("T")) this.doJazdyProbnej.setSelected(true);
         else this.doJazdyProbnej.setSelected(false);
+    }
+
+    //to dajesz na onAction w pliku xml dla buttona accept i
+    @FXML
+    private void clickAccept(ActionEvent event) {
+
+
+        marka.getText(); // tak pobierasz zmienne z textfield-ow (mozesz je sobie do czegos przypisac jak tam wolisz zalezy co dalej chcesz robic)
+
+        // de facto mozesz wrzucic to co masz u góry ale zamienic setText na getText
+
+        // potem przekazujesz to do bazy danych
+
+        // TODO funkcja do wysylania do bazy danych np sendData()
+
+        // potem robisz repaint glownego okna (pobierasz jeszcze raz dane z bazy i je wyswietlasz) - tak jak przy usuwania bo mowiles ze tam ci dziala
     }
 
     @FXML
