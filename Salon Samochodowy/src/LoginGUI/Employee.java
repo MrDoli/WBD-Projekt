@@ -14,7 +14,7 @@ public class Employee {
     private SimpleStringProperty email;
     private SimpleStringProperty adres;
 
-    public Employee(Integer id, String imie, String nazwisko, String stanowisko, String numerTel, String koniecUmowy, String dataZatrudnienia, String email, String adres){
+    public Employee(Integer id, String imie, String nazwisko, String stanowisko, String numerTel, String koniecUmowy, String dataZatrudnienia, String email, String adres) {
         this.id = new SimpleIntegerProperty(id);
         this.imie = new SimpleStringProperty(imie);
         this.nazwisko = new SimpleStringProperty(nazwisko);

@@ -13,7 +13,7 @@ public class Customer {
     private SimpleStringProperty pesel;
     private SimpleStringProperty adres;
 
-    public Customer(Integer id, String imie, String nazwisko, Integer rabat, String numerTel, String email, String pesel, String adres){
+    public Customer(Integer id, String imie, String nazwisko, Integer rabat, String numerTel, String email, String pesel, String adres) {
         this.id = new SimpleIntegerProperty(id);
         this.imie = new SimpleStringProperty(imie);
         this.nazwisko = new SimpleStringProperty(nazwisko);

@@ -17,70 +17,119 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class TablesController {
 
-    @FXML private Button addButton;
-    @FXML private Button cancelButton;
-    @FXML private Button editButton;
-    @FXML private Button deleteButton;
+    @FXML
+    private Button carAddButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Button carEditButton;
+    @FXML
+    private Button carDeleteButton;
 
-    @FXML private TableView <Car> carsTableView;
-    @FXML private TableColumn <Car, Integer> carId;
-    @FXML private TableColumn <Car, String> status;
-    @FXML private TableColumn <Car, String> naSprzedaz;
-    @FXML private TableColumn <Car, String> doJazdyProbnej;
-    @FXML private TableColumn <Car, Integer> przebieg;
-    @FXML private TableColumn <Car, Integer> netto;
-    @FXML private TableColumn <Car, Integer> brutto;
-    @FXML private TableColumn <Car, String> model;
-    @FXML private TableColumn <Car, String> marka;
+    @FXML
+    private TableView<Car> carsTableView;
+    @FXML
+    private TableColumn<Car, Integer> carId;
+    @FXML
+    private TableColumn<Car, String> status;
+    @FXML
+    private TableColumn<Car, String> naSprzedaz;
+    @FXML
+    private TableColumn<Car, String> doJazdyProbnej;
+    @FXML
+    private TableColumn<Car, Integer> przebieg;
+    @FXML
+    private TableColumn<Car, Integer> netto;
+    @FXML
+    private TableColumn<Car, Integer> brutto;
+    @FXML
+    private TableColumn<Car, String> model;
+    @FXML
+    private TableColumn<Car, String> marka;
+    @FXML
+    private TableColumn<Car, String> naped;
+    @FXML
+    private TableColumn<Car, Float> pojemnosc;
+    @FXML
+    private TableColumn<Car, String> wersjaWyposazenia;
+    @FXML
+    private TableColumn<Car, Integer> rokProdukcji;
 
-    @FXML private TableView<Employee> employeeTableView;
-    @FXML private TableColumn<Employee, Integer> employeeId;
-    @FXML private TableColumn<Employee, String> imie;
-    @FXML private TableColumn<Employee, String> nazwisko;
-    @FXML private TableColumn<Employee, String> stanowisko;
-    @FXML private TableColumn<Employee, String> numerTel;
-    @FXML private TableColumn<Employee, String> dataZatrudnienia;
-    @FXML private TableColumn<Employee, String> koniecUmowy;
-    @FXML private TableColumn<Employee, String> email;
-    @FXML private TableColumn<Employee, String> adres;
+    @FXML
+    private TableView<Employee> employeeTableView;
+    @FXML
+    private TableColumn<Employee, Integer> employeeId;
+    @FXML
+    private TableColumn<Employee, String> imie;
+    @FXML
+    private TableColumn<Employee, String> nazwisko;
+    @FXML
+    private TableColumn<Employee, String> stanowisko;
+    @FXML
+    private TableColumn<Employee, String> numerTel;
+    @FXML
+    private TableColumn<Employee, String> dataZatrudnienia;
+    @FXML
+    private TableColumn<Employee, String> koniecUmowy;
+    @FXML
+    private TableColumn<Employee, String> email;
+    @FXML
+    private TableColumn<Employee, String> adres;
 
-    @FXML private TableView<Customer> customerTableView;
-    @FXML private TableColumn<Customer, Integer> customerId;
-    @FXML private TableColumn<Customer, String> customerImie;
-    @FXML private TableColumn<Customer, String> customerNazwisko;
-    @FXML private TableColumn<Customer, Integer> customerRabat;
-    @FXML private TableColumn<Customer, String> customerNumerTel;
-    @FXML private TableColumn<Customer, String> customerEmail;
-    @FXML private TableColumn<Customer, String> customerPesel;
-    @FXML private TableColumn<Customer, String> customerAdres;
-
+    @FXML
+    private TableView<Customer> customerTableView;
+    @FXML
+    private TableColumn<Customer, Integer> customerId;
+    @FXML
+    private TableColumn<Customer, String> customerImie;
+    @FXML
+    private TableColumn<Customer, String> customerNazwisko;
+    @FXML
+    private TableColumn<Customer, Integer> customerRabat;
+    @FXML
+    private TableColumn<Customer, String> customerNumerTel;
+    @FXML
+    private TableColumn<Customer, String> customerEmail;
+    @FXML
+    private TableColumn<Customer, String> customerPesel;
+    @FXML
+    private TableColumn<Customer, String> customerAdres;
 
 
     private DBManager dbManager = new DBManager();
 
-    private void getCars(){
+    private void getCars() {
         ObservableList<Car> cars = FXCollections.observableArrayList(dbManager.getCars());
         carsTableView.setItems(cars);
     }
-    private void getEmployees(){
+
+    @FXML
+    private void deleteCar(){
+        if(carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+
+        System.out.print(carsTableView.getSelectionModel().getSelectedItem().getId());
+        dbManager.deleteCar(carsTableView.getSelectionModel().getSelectedItem().getId());
+        getCars();
+
+    }
+
+    private void getEmployees() {
         ObservableList<Employee> employees = FXCollections.observableArrayList(dbManager.getEmployees());
         employeeTableView.setItems(employees);
     }
-    private void getCustomers(){
+
+    private void getCustomers() {
         ObservableList<Customer> customers = FXCollections.observableArrayList(dbManager.getCustomers());
         customerTableView.setItems(customers);
     }
 
     @FXML
-    private void openCarEditWindow(ActionEvent event) throws IOException{
-        System.out.print("dziala");
+    private void openCarEditWindow(ActionEvent event, boolean edit) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("EditCars.fxml"));
         Parent parent = loader.load();
@@ -89,8 +138,22 @@ public class TablesController {
         stage.setScene(scene);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+        if (edit) {
+            loader.getController();
+        }
         stage.showAndWait();
     }
+
+    @FXML
+    private void addCar(ActionEvent event) throws IOException {
+        openCarEditWindow(event, false);
+    }
+
+    @FXML
+    private void editCar(ActionEvent event) throws IOException {
+        openCarEditWindow(event, true);
+    }
+
 
     @FXML
     private void initialize() {
@@ -102,8 +165,12 @@ public class TablesController {
         przebieg.setCellValueFactory(cellData -> cellData.getValue().przebiegProperty().asObject());
         netto.setCellValueFactory(cellData -> cellData.getValue().nettoProperty().asObject());
         brutto.setCellValueFactory(cellData -> cellData.getValue().bruttoProperty().asObject());
-        model.setCellValueFactory(cellData ->  new ReadOnlyStringWrapper(cellData.getValue().getModel()));
+        model.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getModel()));
         marka.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getMarka()));
+        naped.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getRodzajNapedu()));
+        pojemnosc.setCellValueFactory(cellData -> cellData.getValue().pojemnoscProperty().asObject());
+        wersjaWyposazenia.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getWersjaWyposazenia()));
+        rokProdukcji.setCellValueFactory(cellData -> cellData.getValue().rokProperty().asObject());
 
         employeeId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         imie.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getImie()));

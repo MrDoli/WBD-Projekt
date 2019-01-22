@@ -29,7 +29,7 @@
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" />
+                        <TextField fx:id="marka" alignment="CENTER" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -39,7 +39,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField />
+                        <TextField fx:id="model" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -49,7 +49,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <ChoiceBox prefWidth="150.0" />
+                        <ChoiceBox fx:id="status" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="210.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -59,7 +59,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox fx:id="naSprzedaz" mnemonicParsing="false" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="180.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -69,7 +69,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <CheckBox mnemonicParsing="false" text="CheckBox" />
+                        <CheckBox fx:id="doJazdyProbnej" mnemonicParsing="false" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="282.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -79,7 +79,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField />
+                        <TextField fx:id="przebieg" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="293.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -89,7 +89,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField />
+                        <TextField fx:id="netto" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="301.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -99,7 +99,7 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField />
+                        <TextField fx:id="brutto" />
                      </children>
                   </HBox>
                </children>
@@ -111,8 +111,8 @@
          <bottom>
             <ButtonBar BorderPane.alignment="CENTER">
                <buttons>
-                  <Button mnemonicParsing="false" text="Anuluj" />
-                  <Button layoutX="520.0" layoutY="17.0" mnemonicParsing="false" text="Zatwierdź" />
+                  <Button fx:id="cancel" mnemonicParsing="false" text="Anuluj" />
+                  <Button fx:id="accept" layoutX="520.0" layoutY="17.0" mnemonicParsing="false" text="Zatwierdź" />
                </buttons>
             </ButtonBar>
          </bottom>
