@@ -4,10 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -19,9 +17,17 @@ public class EditCarsController {
     private Button accept;
 
     @FXML
-    private TextField marka;
+    private ComboBox<String> marka;
     @FXML
-    private TextField model;
+    private ComboBox<String> model;
+    @FXML
+    private ComboBox<String> rodzajNapedu;
+    @FXML
+    private ComboBox<String> pojemnosc;
+    @FXML
+    private ComboBox<String> wersjaWyposazenia;
+    @FXML
+    private ComboBox<String> rok;
     @FXML
     private ChoiceBox<String> status;
     @FXML
@@ -35,12 +41,16 @@ public class EditCarsController {
     @FXML
     private TextField brutto;
 
+    private DBManager dbManager;
 
-    // TODO Edit do usuniecia na moje
+    public void setDbManager(DBManager dbManager) {
+        this.dbManager = dbManager;
+    }
+
     @FXML
-    public void edit(String marka, String model, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
-        this.marka.setText(marka);
-        this.model.setText(model);
+    public void edit(String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
+        //this.marka.getEditor().setText(marka);
+        //this.model.getEditor().setText(model);
         this.przebieg.setText(przebieg.toString());
         this.netto.setText(netto.toString());
         this.brutto.setText(brutto.toString());
@@ -50,22 +60,39 @@ public class EditCarsController {
         else this.naSprzedaz.setSelected(false);
         if (doJazdyProbnej.equals("T")) this.doJazdyProbnej.setSelected(true);
         else this.doJazdyProbnej.setSelected(false);
+
     }
 
     //to dajesz na onAction w pliku xml dla buttona accept i
     @FXML
     private void clickAccept(ActionEvent event) {
-
-
-        marka.getText(); // tak pobierasz zmienne z textfield-ow (mozesz je sobie do czegos przypisac jak tam wolisz zalezy co dalej chcesz robic)
-
-        // de facto mozesz wrzucic to co masz u góry ale zamienic setText na getText
-
-        // potem przekazujesz to do bazy danych
-
-        // TODO funkcja do wysylania do bazy danych np sendData()
-
-        // potem robisz repaint glownego okna (pobierasz jeszcze raz dane z bazy i je wyswietlasz) - tak jak przy usuwania bo mowiles ze tam ci dziala
+        String marka = this.marka.getValue();
+        String model = this.model.getValue();
+        String rodzajNapedu = this.rodzajNapedu.getValue();
+        Float pojemnosc = Float.parseFloat(this.pojemnosc.getValue());
+        String wersjaWyposazenia = this.wersjaWyposazenia.getValue();
+        Integer rok = Integer.parseInt(this.rok.getValue());
+        String status = this.status.getValue();
+        String naSprzedaz;
+        if (this.naSprzedaz.isSelected()) naSprzedaz = "T";
+        else naSprzedaz = "N";
+        String doJazdyProbnej;
+        if(this.doJazdyProbnej.isSelected()) doJazdyProbnej = "T";
+        else doJazdyProbnej = "N";
+        Integer przebieg = Integer.parseInt(this.przebieg.getText());
+        Integer netto = Integer.parseInt(this.netto.getText());
+        Integer brutto = Integer.parseInt(this.brutto.getText());
+//        if (this.marka.getSelectionModel().getSelectedItem().isEmpty()) return;
+//        else if(this.model.getSelectionModel().isEmpty());
+//        else{
+//
+//        }
+        dbManager.addCar(marka,model,rodzajNapedu,pojemnosc,wersjaWyposazenia,rok,status,naSprzedaz,doJazdyProbnej,przebieg,netto,brutto);
+        close();
+    }
+    @FXML private void close(){
+        Stage stage = (Stage) cancel.getScene().getWindow();
+        stage.close();
     }
 
     @FXML
@@ -75,5 +102,6 @@ public class EditCarsController {
         statusArray.add("Używany");
         ObservableList<String> statusList = FXCollections.observableArrayList(statusArray);
         status.setItems(statusList);
+
     }
 }
