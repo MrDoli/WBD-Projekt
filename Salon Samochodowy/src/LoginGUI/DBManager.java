@@ -5,7 +5,12 @@ import oracle.jdbc.proxy.annotation.Pre;
 import java.sql.*;
 import java.util.ArrayList;
 
+
 public class DBManager {
+
+    private static final int SALON = 1;
+    private static final int FABRYKA = 1;
+
     private Connection connection;
 
     public DBManager() {
@@ -59,16 +64,81 @@ public class DBManager {
         return cars;
     }
 
-    public void deleteCar(Integer id){
-        try{
+    public void addCar(String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
+        try {
+            PreparedStatement selectNewMarkaModelu = connection.prepareStatement("select max(\"ID_marki_modelu\") from \"Marki_modeli\"");
+            PreparedStatement selectNewModel = connection.prepareStatement("select max(\"ID_modelu\") from \"Modele\"");
+            PreparedStatement selectMarkaModelu = connection.prepareStatement("select \"ID_marki_modelu\" from \"Marki_modeli\" where \"Model\" = ? and \"Marka\" = ?");
+            PreparedStatement insertMarkaModelu = connection.prepareStatement("insert into \"Marki_modeli\" values (\"Marki_modeli_SEQ\".nextval, ?, ?)");
+            PreparedStatement selectModel = connection.prepareStatement("select \"ID_modelu\" from \"Modele\" where \"Rodzaj_napedu\"=? and \"Pojemnosc_silnika\"=? and \"Wersja_wyposazenia\"=? and \"Rok_produkcji\"=? and \"ID_marki_modelu\"=?");
+            PreparedStatement insertModel = connection.prepareStatement("insert into \"Modele\" values (\"Modele_SEQ\".nextval, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement insertCar = connection.prepareStatement("insert into \"Samochody\" values (\"Samochody_SEQ\".nextval, ?, ?, ?, ?, ?, ?, ?)");
+
+            insertCar.setString(1, status);
+            insertCar.setString(2, naSprzedaz);
+            insertCar.setString(3, doJazdyProbnej);
+            insertCar.setInt(4, przebieg);
+            insertCar.setInt(5, netto);
+            insertCar.setInt(6, brutto);
+
+            insertModel.setString(1,rodzajNapedu);
+            insertModel.setFloat(2,pojemnosc);
+            insertModel.setString(3,wersjaWyposazenia);
+            insertModel.setInt(4,rok);
+            insertModel.setInt(6,FABRYKA);
+
+            selectMarkaModelu.setString(1, model);
+            selectMarkaModelu.setString(2, marka);
+            ResultSet rs = selectMarkaModelu.executeQuery();
+            Integer idModelu;
+            Integer idMarkiModelu;
+            if (rs.next()) {
+                idMarkiModelu = rs.getInt(1);
+                selectModel.setString(1, rodzajNapedu);
+                selectModel.setFloat(2, pojemnosc);
+                selectModel.setString(3, wersjaWyposazenia);
+                selectModel.setInt(4, rok);
+                selectModel.setInt(5, idMarkiModelu);
+                ResultSet rs2 = selectModel.executeQuery();
+                if (rs2.next()) {
+                    idModelu = rs2.getInt(1);
+                }else {
+                    insertModel.setInt(5,idMarkiModelu);
+                    insertModel.executeUpdate();
+                    ResultSet rs3 = selectNewModel.executeQuery();
+                    rs3.next();
+                    idModelu = rs3.getInt(1);
+                }
+            } else {
+                insertMarkaModelu.setString(1,model);
+                insertMarkaModelu.setString(2,marka);
+                insertMarkaModelu.executeUpdate();
+                ResultSet rs4 = selectMarkaModelu.executeQuery();
+                rs4.next();
+                idMarkiModelu = rs4.getInt(1);
+                insertModel.setInt(5,idMarkiModelu);
+                insertModel.executeUpdate();
+                rs4 = selectNewModel.executeQuery();
+                idModelu = rs4.getInt(1);
+            }
+            insertCar.setInt(7,idModelu);
+            insertCar.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCar(Integer id) {
+        try {
             PreparedStatement ps = connection.prepareStatement("delete from \"Salony_Samochodowe_Samochody\" where \"ID_Samochodu\" = ?");
             PreparedStatement deleteCarStatement = connection.prepareStatement("delete from \"Samochody\" where \"ID_Samochodu\" = ?");
-            ps.setInt(1,id);
+            ps.setInt(1, id);
             ps.executeUpdate();
-            deleteCarStatement.setInt(1,id);
+            deleteCarStatement.setInt(1, id);
             deleteCarStatement.executeUpdate();
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

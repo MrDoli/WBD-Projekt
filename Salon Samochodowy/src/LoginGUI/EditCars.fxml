@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginGUI.EditCarsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginGUI.EditCarsController">
    <children>
       <BorderPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
@@ -29,7 +30,7 @@
                               <Font name="Arial" size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="marka" alignment="CENTER" />
+                        <ComboBox fx:id="marka" editable="true" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -39,7 +40,47 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="model" alignment="CENTER" />
+                        <ComboBox fx:id="model" editable="true" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="301.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Rodzaj napędu:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="rodzajNapedu" editable="true" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="306.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Pojemność silnika:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="pojemnosc" editable="true" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="309.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Wersja wyposażenia:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="wersjaWyposazenia" editable="true" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="312.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                     <children>
+                        <Label text="Rok produkcji:">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="rok" editable="true" prefWidth="150.0" />
                      </children>
                   </HBox>
                   <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
@@ -111,8 +152,8 @@
          <bottom>
             <ButtonBar BorderPane.alignment="CENTER">
                <buttons>
-                  <Button fx:id="cancel" mnemonicParsing="false" text="Anuluj" />
-                  <Button fx:id="accept" layoutX="520.0" layoutY="17.0" mnemonicParsing="false" text="Zatwierdź" />
+                  <Button fx:id="cancel" mnemonicParsing="false" onAction="#close" text="Anuluj" />
+                  <Button fx:id="accept" layoutX="520.0" layoutY="17.0" mnemonicParsing="false" onAction="#clickAccept" text="Zatwierdź" />
                </buttons>
             </ButtonBar>
          </bottom>

@@ -137,15 +137,25 @@ public class TablesController {
         Stage stage = new Stage();
 
         EditCarsController editCarsController = loader.getController();
-        editCarsController.edit("Honda", "Civic","Nowy", "T", "T",80000,45000,30000);
+        editCarsController.setDbManager(dbManager);
 
         stage.setScene(scene);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
         if (edit) {
-            loader.getController();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+
+            editCarsController.edit("", "Civic","",(float)1.0,"",2000,"Nowy", "T", "T",80000,45000,30000);
         }
         stage.showAndWait();
+        getCars();
     }
 
     @FXML
@@ -155,7 +165,12 @@ public class TablesController {
 
     @FXML
     private void editCar(ActionEvent event) throws IOException {
+        if(carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
         openCarEditWindow(event, true);
+    }
+    @FXML private void close(){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
     }
 
 
