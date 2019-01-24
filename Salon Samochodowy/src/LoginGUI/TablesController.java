@@ -11,15 +11,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 public class TablesController {
@@ -131,6 +129,8 @@ public class TablesController {
     private void deleteCar() {
         if (carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
 
+        if (!confirmWindow()) return;
+
         dbManager.deleteCar(carsTableView.getSelectionModel().getSelectedItem().getId());
         getCars();
 
@@ -144,6 +144,7 @@ public class TablesController {
     @FXML
     private void deleteEmployee() {
         if (employeeTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+        if (!confirmWindow()) return;
 
         dbManager.deleteEmployee(employeeTableView.getSelectionModel().getSelectedItem().getId());
         getEmployees();
@@ -157,9 +158,50 @@ public class TablesController {
     @FXML
     private void deleteCustomer() {
         if (customerTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+        if (!confirmWindow()) return;
 
         dbManager.deleteCustomer(customerTableView.getSelectionModel().getSelectedItem().getId());
         getCustomers(0);
+    }
+
+    @FXML
+    private void searchCars(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("SearchCars.fxml"));
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+
+        SearchCarsController searchCarsController = loader.getController();
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+        stage.showAndWait();
+        Car car = searchCarsController.getCars();
+        String marka = car.getMarka();
+        String model = car.getModel();
+        String naped = car.getRodzajNapedu();
+        Float pojemnosc2 = car.getPojemnosc();
+        String pojemnosc = pojemnosc2.toString();
+        if (pojemnosc2 <= 0) pojemnosc = "%";
+        Integer rok2 = car.getRok();
+        String rok = rok2.toString();
+        if (rok2 <= 0) rok = "%";
+        String status = car.getStatus();
+        String naSprzedaz = car.getNaSprzedaz();
+        String doJazdyProbnej = car.getDoJazdyProbnej();
+        marka = marka.concat("%");
+        model = model.concat("%");
+        naped = naped.concat("%");
+        pojemnosc = pojemnosc.concat("%");
+        rok = rok.concat("%");
+        status = status.concat("%");
+        naSprzedaz = naSprzedaz.concat("%");
+        doJazdyProbnej = doJazdyProbnej.concat("%");
+        System.out.print(marka+" / "+model+" / "+naped+" / "+pojemnosc+" / "+rok+" / "+status+" / "+naSprzedaz+" / "+doJazdyProbnej+" / ");
+        ObservableList<Car> cars = FXCollections.observableArrayList(dbManager.findCars(marka, model, naped, pojemnosc, rok, status, naSprzedaz, doJazdyProbnej));
+        carsTableView.setItems(cars);
     }
 
     @FXML
@@ -264,6 +306,21 @@ public class TablesController {
         stage.close();
     }
 
+    private boolean confirmWindow() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText("Usuwanie rekordu");
+        alert.setContentText("Czy na pewno chcesz usunąć wybrany rekord?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     public void setCustId(Integer custId) {
         this.custId = custId;
         carAddButton.setDisable(true);
@@ -334,7 +391,7 @@ public class TablesController {
         customerPesel.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPesel()));
         customerAdres.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAdres()));
 
-       // getCars();
+        // getCars();
         //getEmployees();
         //getCustomers();
     }

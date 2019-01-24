@@ -44,6 +44,7 @@
                                     <Button fx:id="carAddButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#addCar" text="Dodaj" />
                                     <Button fx:id="carDeleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteCar" text="Usuń" />
                                     <Button fx:id="carEditButton" mnemonicParsing="false" onAction="#editCar" text="Edytuj" />
+                                    <Button layoutY="10.0" mnemonicParsing="false" onAction="#searchCars" text="Szukaj" />
                                   <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#close" text="Anuluj" />
                                 </buttons>
                                  <BorderPane.margin>

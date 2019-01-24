@@ -20,6 +20,10 @@ public class Car {
     private SimpleIntegerProperty netto;
     private SimpleIntegerProperty brutto;
 
+    public Car(){
+
+    }
+
     public Car(Integer id, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto, String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok) {
         this.id = new SimpleIntegerProperty(id);
         this.status = new SimpleStringProperty(status);
