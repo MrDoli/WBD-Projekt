@@ -109,6 +109,8 @@ public class TablesController {
 
 
     private DBManager dbManager = new DBManager();
+    private boolean isOwner;
+    private Integer custId;
 
     private void getCars() {
         ObservableList<Car> cars = FXCollections.observableArrayList(dbManager.getCars());
@@ -210,15 +212,22 @@ public class TablesController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
 
-        if(edit){
-//            Integer id = customerTableView.getSelectionModel().getSelectedItem().getId();
-//            String imie = customerTableView.getSelectionModel().getSelectedItem().getImie();
-//            String nazwisko = customerTableView.getSelectionModel().getSelectedItem().getNazwisko();
-//            String email = customerTableView.getSelectionModel().getSelectedItem().getEmail();
-//            String rabat = customerTableView.getSelectionModel().getSelectedItem().getRabat();
-//            String numerTel = customerTableView.getSelectionModel().getSelectedItem().getNumerTel();
-//            String pesel = customerTableView.getSelectionModel().getSelectedItem().getPesel();
+        if (edit) {
+            Integer id = customerTableView.getSelectionModel().getSelectedItem().getId();
+            String imie = customerTableView.getSelectionModel().getSelectedItem().getImie();
+            String nazwisko = customerTableView.getSelectionModel().getSelectedItem().getNazwisko();
+            String email = customerTableView.getSelectionModel().getSelectedItem().getEmail();
+            Integer rabat = customerTableView.getSelectionModel().getSelectedItem().getRabat();
+            String numerTel = customerTableView.getSelectionModel().getSelectedItem().getNumerTel();
+            String pesel = customerTableView.getSelectionModel().getSelectedItem().getPesel();
+            String ulica = customerTableView.getSelectionModel().getSelectedItem().getUlica();
+            Integer numerBudynku = customerTableView.getSelectionModel().getSelectedItem().getNumerBudynku();
+            Integer numerLokalu = customerTableView.getSelectionModel().getSelectedItem().getNumerLokalu();
+            String kodPocztowy = customerTableView.getSelectionModel().getSelectedItem().getKodPocztowy();
+            String miejscowosc = customerTableView.getSelectionModel().getSelectedItem().getMiejscowosc();
+            String kraj = customerTableView.getSelectionModel().getSelectedItem().getKraj();
 
+            editCustomersController.edit(id, imie, nazwisko, ulica, numerBudynku, numerLokalu, kodPocztowy, miejscowosc, kraj, numerTel, email, pesel, rabat);
 
         }
 
@@ -227,12 +236,14 @@ public class TablesController {
 
     }
 
-    @FXML private void addCustomer(ActionEvent event) throws IOException{
+    @FXML
+    private void addCustomer(ActionEvent event) throws IOException {
         openCustomerEditWindow(event, false);
     }
 
-    @FXML private void editCustomer(ActionEvent event) throws IOException{
-        if(customerTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+    @FXML
+    private void editCustomer(ActionEvent event) throws IOException {
+        if (customerTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
 
         openCustomerEditWindow(event, true);
     }
@@ -243,9 +254,14 @@ public class TablesController {
         stage.close();
     }
 
+    public void setCustId(Integer custId) {
+        this.custId = custId;
+    }
 
     @FXML
     private void initialize() {
+        isOwner = false;
+        custId = 0;
 
         carId.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
         status.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getStatus()));

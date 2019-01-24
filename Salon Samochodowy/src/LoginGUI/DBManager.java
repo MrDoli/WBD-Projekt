@@ -251,7 +251,7 @@ public class DBManager {
                     kraj = rs2.getString(7);
                 }
                 String adres = ulica + ' ' + nrBudynku + '/' + nrLokalu + ' ' + kod + ' ' + miejscowosc + ' ' + kraj;
-                customers.add(new Customer(id, imie, nazwisko, rabat, numerTel, email, pesel, adres));
+                customers.add(new Customer(id, imie, nazwisko, rabat, numerTel, email, pesel, ulica, nrBudynku, nrLokalu, kod, miejscowosc, kraj, adres));
             }
             rs.close();
         } catch (SQLException e) {
@@ -266,7 +266,7 @@ public class DBManager {
             PreparedStatement selectNewAdres = connection.prepareStatement("select max(\"ID_adresu\") from \"Adresy\"");
             PreparedStatement insertAdres = connection.prepareStatement("insert into \"Adresy\" values (\"Adresy_SEQ\".nextval, ?, ?, ?, ?, ?, ?)");
             PreparedStatement insertKlient = connection.prepareStatement("insert into \"Klienci\" values (\"Klienci_SEQ\".nextval, ?, ?, ?, ?, ?, ?, ?)");
-            PreparedStatement updateKlient = connection.prepareStatement("update \"Klienci\" set \"Imie\"=?, \"Nazwisko\"=?, \"Rabat\"=?, \"Numer_telefonu\", \"email\"=?, \"Pesel\"=?, \"ID_adresu\"=? where \"ID_Klienta\"=?");
+            PreparedStatement updateKlient = connection.prepareStatement("update \"Klienci\" set \"Imie\"=?, \"Nazwisko\"=?, \"Rabat\"=?, \"Numer_telefonu\"=?, \"email\"=?, \"Pesel\"=?, \"ID_adresu\"=? where \"ID_Klienta\"=?");
 
             Integer idAdresu;
 
@@ -308,6 +308,7 @@ public class DBManager {
                 updateKlient.setString(5,email);
                 updateKlient.setString(6,pesel);
                 updateKlient.setInt(7, idAdresu);
+                updateKlient.setInt(8,id);
                 updateKlient.executeUpdate();
             }
 

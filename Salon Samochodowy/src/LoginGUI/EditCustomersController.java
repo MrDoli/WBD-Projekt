@@ -44,17 +44,17 @@ public class EditCustomersController {
         this.dbManager = dbManager;
     }
 
-    public void edit(Integer consumerId, String imie, String nazwisko, String ulica, String numerBudynku, String numerLokalu, String kodPocztowy, String miejscowosc, String kraj, String numerTel, String email, String pesel, String rabat) {
+    public void edit(Integer consumerId, String imie, String nazwisko, String ulica, Integer numerBudynku, Integer numerLokalu, String kodPocztowy, String miejscowosc, String kraj, String numerTel, String email, String pesel, Integer rabat) {
         this.imie.setText(imie);
         this.nazwisko.setText(nazwisko);
         this.ulica.setText(ulica);
-        this.numerBudynku.setText(numerBudynku);
-        this.numerLokalu.setText(numerLokalu);
+        this.numerBudynku.setText(numerBudynku.toString());
+        this.numerLokalu.setText(numerLokalu.toString());
         this.kodPocztowy.setText(kodPocztowy);
         this.miejscowosc.setText(miejscowosc);
         this.kraj.setText(kraj);
         this.pesel.setText(pesel);
-        this.rabat.setText(rabat);
+        this.rabat.setText(rabat.toString());
         this.numerTel.setText(numerTel);
         this.email.setText(email);
 
