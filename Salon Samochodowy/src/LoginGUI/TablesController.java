@@ -1,6 +1,7 @@
 package LoginGUI;
 
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +31,12 @@ public class TablesController {
     private Button carEditButton;
     @FXML
     private Button carDeleteButton;
+//    @FXML private Button customerAddButton;
+//    @FXML private Button customerEditButton;
+//    @FXML private Button customerDeleteButton;
+//    @FXML private Button employeeAddButton;
+//    @FXML private Button employeeEditButton;
+//    @FXML private Button employeeDeleteButton;
 
     @FXML
     private TableView<Car> carsTableView;
@@ -109,10 +116,9 @@ public class TablesController {
     }
 
     @FXML
-    private void deleteCar(){
-        if(carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+    private void deleteCar() {
+        if (carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
 
-        System.out.print(carsTableView.getSelectionModel().getSelectedItem().getId());
         dbManager.deleteCar(carsTableView.getSelectionModel().getSelectedItem().getId());
         getCars();
 
@@ -123,9 +129,25 @@ public class TablesController {
         employeeTableView.setItems(employees);
     }
 
+    @FXML
+    private void deleteEmployee() {
+        if (employeeTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+
+        dbManager.deleteEmployee(employeeTableView.getSelectionModel().getSelectedItem().getId());
+        getEmployees();
+    }
+
     private void getCustomers() {
         ObservableList<Customer> customers = FXCollections.observableArrayList(dbManager.getCustomers());
         customerTableView.setItems(customers);
+    }
+
+    @FXML
+    private void deleteCustomer() {
+        if (customerTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+
+        dbManager.deleteCustomer(customerTableView.getSelectionModel().getSelectedItem().getId());
+        getCustomers();
     }
 
     @FXML
@@ -143,16 +165,21 @@ public class TablesController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(((Node) event.getSource()).getScene().getWindow());
         if (edit) {
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
-//            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+            Integer carId = carsTableView.getSelectionModel().getSelectedItem().getId();
+            String marka = carsTableView.getSelectionModel().getSelectedItem().getMarka();
+            String model = carsTableView.getSelectionModel().getSelectedItem().getModel();
+            String rodzajNapedu = carsTableView.getSelectionModel().getSelectedItem().getRodzajNapedu();
+            Float pojemnosc = carsTableView.getSelectionModel().getSelectedItem().getPojemnosc();
+            String wersjaWyposazenia = carsTableView.getSelectionModel().getSelectedItem().getWersjaWyposazenia();
+            Integer rok = carsTableView.getSelectionModel().getSelectedItem().getRok();
+            String status = carsTableView.getSelectionModel().getSelectedItem().getStatus();
+            String naSprzedaz = carsTableView.getSelectionModel().getSelectedItem().getNaSprzedaz();
+            String doJazdyProbnej = carsTableView.getSelectionModel().getSelectedItem().getDoJazdyProbnej();
+            Integer przebieg = carsTableView.getSelectionModel().getSelectedItem().getPrzebieg();
+            Integer netto = carsTableView.getSelectionModel().getSelectedItem().getNetto();
+            Integer brutto = carsTableView.getSelectionModel().getSelectedItem().getBrutto();
 
-            editCarsController.edit("", "Civic","",(float)1.0,"",2000,"Nowy", "T", "T",80000,45000,30000);
+            editCarsController.edit(carId, marka, model, rodzajNapedu, pojemnosc, wersjaWyposazenia, rok, status, naSprzedaz, doJazdyProbnej, przebieg, netto, brutto);
         }
         stage.showAndWait();
         getCars();
@@ -165,10 +192,53 @@ public class TablesController {
 
     @FXML
     private void editCar(ActionEvent event) throws IOException {
-        if(carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+        if (carsTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
         openCarEditWindow(event, true);
     }
-    @FXML private void close(){
+
+    private void openCustomerEditWindow(ActionEvent event, boolean edit) throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("EditCustomers.fxml"));
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+
+        EditCustomersController editCustomersController = loader.getController();
+        editCustomersController.setDbManager(dbManager);
+
+        stage.setScene(scene);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+
+        if(edit){
+//            Integer id = customerTableView.getSelectionModel().getSelectedItem().getId();
+//            String imie = customerTableView.getSelectionModel().getSelectedItem().getImie();
+//            String nazwisko = customerTableView.getSelectionModel().getSelectedItem().getNazwisko();
+//            String email = customerTableView.getSelectionModel().getSelectedItem().getEmail();
+//            String rabat = customerTableView.getSelectionModel().getSelectedItem().getRabat();
+//            String numerTel = customerTableView.getSelectionModel().getSelectedItem().getNumerTel();
+//            String pesel = customerTableView.getSelectionModel().getSelectedItem().getPesel();
+
+
+        }
+
+        stage.showAndWait();
+        getCustomers();
+
+    }
+
+    @FXML private void addCustomer(ActionEvent event) throws IOException{
+        openCustomerEditWindow(event, false);
+    }
+
+    @FXML private void editCustomer(ActionEvent event) throws IOException{
+        if(customerTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
+
+        openCustomerEditWindow(event, true);
+    }
+
+    @FXML
+    private void close() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }

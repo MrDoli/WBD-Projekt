@@ -41,29 +41,35 @@ public class EditCarsController {
     @FXML
     private TextField brutto;
 
+    private Integer carId;
     private DBManager dbManager;
+    private boolean isEdited;
 
     public void setDbManager(DBManager dbManager) {
         this.dbManager = dbManager;
     }
 
     @FXML
-    public void edit(String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
-        //this.marka.getEditor().setText(marka);
-        //this.model.getEditor().setText(model);
+    public void edit(Integer carId, String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
+        this.marka.getSelectionModel().select(marka);
+        this.model.getSelectionModel().select(model);
+        this.rodzajNapedu.getSelectionModel().select(rodzajNapedu);
+        this.pojemnosc.getSelectionModel().select(pojemnosc.toString());
+        this.wersjaWyposazenia.getSelectionModel().select(wersjaWyposazenia);
+        this.rok.getSelectionModel().select(rok.toString());
+        if (status.toUpperCase().equals("NOWY")) this.status.getSelectionModel().select(0);
+        else this.status.getSelectionModel().select(1);
         this.przebieg.setText(przebieg.toString());
         this.netto.setText(netto.toString());
         this.brutto.setText(brutto.toString());
-        if (status.equals("Nowy")) this.status.setValue("Nowy");
-        else if (status.equals("Używany") || status.equals("Uzywany")) this.status.setValue("Używany");
         if (naSprzedaz.equals("T")) this.naSprzedaz.setSelected(true);
         else this.naSprzedaz.setSelected(false);
         if (doJazdyProbnej.equals("T")) this.doJazdyProbnej.setSelected(true);
         else this.doJazdyProbnej.setSelected(false);
-
+        this.carId =carId;
+        isEdited = true;
     }
 
-    //to dajesz na onAction w pliku xml dla buttona accept i
     @FXML
     private void clickAccept(ActionEvent event) {
         String marka = this.marka.getValue();
@@ -77,26 +83,27 @@ public class EditCarsController {
         if (this.naSprzedaz.isSelected()) naSprzedaz = "T";
         else naSprzedaz = "N";
         String doJazdyProbnej;
-        if(this.doJazdyProbnej.isSelected()) doJazdyProbnej = "T";
+        if (this.doJazdyProbnej.isSelected()) doJazdyProbnej = "T";
         else doJazdyProbnej = "N";
         Integer przebieg = Integer.parseInt(this.przebieg.getText());
         Integer netto = Integer.parseInt(this.netto.getText());
         Integer brutto = Integer.parseInt(this.brutto.getText());
-//        if (this.marka.getSelectionModel().getSelectedItem().isEmpty()) return;
-//        else if(this.model.getSelectionModel().isEmpty());
-//        else{
-//
-//        }
-        dbManager.addCar(marka,model,rodzajNapedu,pojemnosc,wersjaWyposazenia,rok,status,naSprzedaz,doJazdyProbnej,przebieg,netto,brutto);
+
+        if(!isEdited)dbManager.editCar(0,marka, model, rodzajNapedu, pojemnosc, wersjaWyposazenia, rok, status, naSprzedaz, doJazdyProbnej, przebieg, netto, brutto);
+        else dbManager.editCar(this.carId,marka, model, rodzajNapedu, pojemnosc, wersjaWyposazenia, rok, status, naSprzedaz, doJazdyProbnej, przebieg, netto, brutto);
         close();
     }
-    @FXML private void close(){
+
+    @FXML
+    private void close() {
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
     }
 
     @FXML
     private void initialize() {
+        isEdited = false;
+        carId = 0;
         ArrayList<String> statusArray = new ArrayList<>();
         statusArray.add("Nowy");
         statusArray.add("Używany");
