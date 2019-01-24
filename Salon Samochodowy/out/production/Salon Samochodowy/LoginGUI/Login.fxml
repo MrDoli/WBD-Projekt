@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginGUI.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginGUI.LoginController">
    <children>
       <VBox fx:id="vBox" alignment="CENTER" prefHeight="350.0" prefWidth="300.0" spacing="10">
          <children>
-            <Button fx:id="administrator" mnemonicParsing="false" prefHeight="45.0" prefWidth="150.0" text="Administrator">
+            <Button fx:id="administrator" mnemonicParsing="false" onAction="#clickedAdministrator" prefHeight="45.0" prefWidth="150.0" text="Administrator">
                <font>
                   <Font size="18.0" />
                </font></Button>
@@ -29,7 +29,7 @@
                <font>
                   <Font size="18.0" />
                </font></Button>
-            <Button fx:id="klient" mnemonicParsing="false" prefHeight="45.0" prefWidth="150.0" text="Klient">
+            <Button fx:id="klient" mnemonicParsing="false" onAction="#clickedKlient" prefHeight="45.0" prefWidth="150.0" text="Klient">
                <font>
                   <Font size="18.0" />
                </font></Button>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginGUI.TablesController">
+   <children>
+      <TabPane prefHeight="700.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <tabs>
+            <Tab text="Samochody">
+               <content>
+                  <AnchorPane>
+                     <children>
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <TableView fx:id="carsTableView" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="carId" prefWidth="40.0" text="ID" />
+                                    <TableColumn fx:id="marka" prefWidth="95.0" text="Marka" />
+                                    <TableColumn fx:id="model" prefWidth="95.0" text="Model" />
+                                    <TableColumn fx:id="naped" prefWidth="95.0" text="Napęd" />
+                                    <TableColumn fx:id="pojemnosc" prefWidth="95.0" text="Pojemność silnika" />
+                                    <TableColumn fx:id="wersjaWyposazenia" prefWidth="95.0" text="Wersja Wyposażenia" />
+                                    <TableColumn fx:id="rokProdukcji" prefWidth="104.0" text="Rok produkcji" />
+                                    <TableColumn fx:id="status" prefWidth="95.0" text="Status" />
+                                    <TableColumn fx:id="naSprzedaz" prefWidth="90.0" text="Na sprzedaż" />
+                                    <TableColumn fx:id="doJazdyProbnej" prefWidth="100.0" text="Do jazdy próbnej" />
+                                    <TableColumn fx:id="przebieg" prefWidth="95.0" text="Przebieg" />
+                                    <TableColumn fx:id="netto" prefWidth="95.0" text="Cena netto" />
+                                    <TableColumn fx:id="brutto" prefWidth="95.0" text="Cena brutto" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <ButtonBar BorderPane.alignment="CENTER">
+                                <buttons>
+                                    <Button fx:id="carAddButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#addCar" text="Dodaj" />
+                                    <Button fx:id="carDeleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteCar" text="Usuń" />
+                                    <Button fx:id="carEditButton" mnemonicParsing="false" onAction="#editCar" text="Edytuj" />
+                                    <Button layoutY="10.0" mnemonicParsing="false" onAction="#searchCars" text="Szukaj" />
+                                  <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#close" text="Anuluj" />
+                                </buttons>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ButtonBar>
+                           </bottom>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Klienci">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <TableView fx:id="customerTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="customerId" prefWidth="40.0" text="ID" />
+                                    <TableColumn fx:id="customerImie" prefWidth="120.0" text="Imie" />
+                                    <TableColumn fx:id="customerNazwisko" prefWidth="120.0" text="Nazwisko" />
+                                    <TableColumn fx:id="customerAdres" prefWidth="300.0" text="Adres" />
+                                    <TableColumn fx:id="customerNumerTel" prefWidth="120.0" text="Numer telefonu" />
+                                    <TableColumn fx:id="customerEmail" prefWidth="120.0" text="Email" />
+                                    <TableColumn fx:id="customerPesel" prefWidth="120.0" text="PESEL" />
+                                    <TableColumn fx:id="customerRabat" prefWidth="120.0" text="Rabat" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <ButtonBar BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="customerAddButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" onAction="#addCustomer" text="Dodaj" />
+                                    <Button fx:id="customerDeleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Usuń" />
+                                    <Button fx:id="customerEditButton" mnemonicParsing="false" onAction="#editCustomer" text="Edytuj" />
+                                    <Button fx:id="cancelButton11" mnemonicParsing="false" onAction="#close" text="Anuluj" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ButtonBar>
+                           </bottom>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </BorderPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="employeesTab" text="Pracownicy">
+               <content>
+                  <AnchorPane>
+                     <children>
+                        <BorderPane prefHeight="667.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <center>
+                              <TableView fx:id="employeeTableView" prefHeight="327.0" prefWidth="364.0" BorderPane.alignment="CENTER">
+                                 <columns>
+                                    <TableColumn fx:id="employeeId" prefWidth="40.0" text="ID" />
+                                    <TableColumn fx:id="imie" prefWidth="120.0" text="Imie" />
+                                    <TableColumn fx:id="nazwisko" prefWidth="120.0" text="Nazwisko" />
+                                    <TableColumn fx:id="stanowisko" prefWidth="120.0" text="Stanowisko" />
+                                    <TableColumn fx:id="numerTel" prefWidth="120.0" text="Numer telefonu" />
+                                    <TableColumn fx:id="email" prefWidth="120.0" text="Email" />
+                                    <TableColumn fx:id="adres" prefWidth="300.0" text="Adres" />
+                                    <TableColumn fx:id="dataZatrudnienia" prefWidth="120.0" text="Data zatrudnienia" />
+                                    <TableColumn fx:id="koniecUmowy" prefWidth="120.0" text="Koniec umowy" />
+                                 </columns>
+                              </TableView>
+                           </center>
+                           <bottom>
+                              <ButtonBar BorderPane.alignment="CENTER">
+                                 <buttons>
+                                    <Button fx:id="employeeAddButton" layoutX="960.0" layoutY="10.0" mnemonicParsing="false" text="Dodaj" />
+                                    <Button fx:id="employeeDeleteButton" layoutX="1040.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteEmployee" text="Usuń" />
+                                    <Button fx:id="employeeEditButton" mnemonicParsing="false" text="Edytuj" />
+                                    <Button fx:id="cancelButton1" mnemonicParsing="false" onAction="#close" text="Anuluj" />
+                                 </buttons>
+                                 <BorderPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </BorderPane.margin>
+                              </ButtonBar>
+                           </bottom>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </BorderPane>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
