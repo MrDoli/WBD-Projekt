@@ -64,7 +64,7 @@ public class DBManager {
         return cars;
     }
 
-    public void addCar(String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
+    public void editCar(Integer carId, String marka, String model, String rodzajNapedu, Float pojemnosc, String wersjaWyposazenia, Integer rok, String status, String naSprzedaz, String doJazdyProbnej, Integer przebieg, Integer netto, Integer brutto) {
         try {
             PreparedStatement selectNewMarkaModelu = connection.prepareStatement("select max(\"ID_marki_modelu\") from \"Marki_modeli\"");
             PreparedStatement selectNewModel = connection.prepareStatement("select max(\"ID_modelu\") from \"Modele\"");
@@ -73,6 +73,7 @@ public class DBManager {
             PreparedStatement selectModel = connection.prepareStatement("select \"ID_modelu\" from \"Modele\" where \"Rodzaj_napedu\"=? and \"Pojemnosc_silnika\"=? and \"Wersja_wyposazenia\"=? and \"Rok_produkcji\"=? and \"ID_marki_modelu\"=?");
             PreparedStatement insertModel = connection.prepareStatement("insert into \"Modele\" values (\"Modele_SEQ\".nextval, ?, ?, ?, ?, ?, ?)");
             PreparedStatement insertCar = connection.prepareStatement("insert into \"Samochody\" values (\"Samochody_SEQ\".nextval, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement updateCar = connection.prepareStatement("update \"Samochody\" set \"Status\"=?, \"Czy_na_sprzedaz\"=?, \"Czy_do_jazdy_probnej\"=?, \"Przebieg\"=?, \"Cena_Netto\"=?, \"Cena_Brutto\"=?, \"ID_modelu\"=? where \"ID_Samochodu\"=?");
 
             insertCar.setString(1, status);
             insertCar.setString(2, naSprzedaz);
@@ -81,11 +82,19 @@ public class DBManager {
             insertCar.setInt(5, netto);
             insertCar.setInt(6, brutto);
 
-            insertModel.setString(1,rodzajNapedu);
-            insertModel.setFloat(2,pojemnosc);
-            insertModel.setString(3,wersjaWyposazenia);
-            insertModel.setInt(4,rok);
-            insertModel.setInt(6,FABRYKA);
+            updateCar.setString(1, status);
+            updateCar.setString(2, naSprzedaz);
+            updateCar.setString(3, doJazdyProbnej);
+            updateCar.setInt(4, przebieg);
+            updateCar.setInt(5, netto);
+            updateCar.setInt(6, brutto);
+            updateCar.setInt(8, carId);
+
+            insertModel.setString(1, rodzajNapedu);
+            insertModel.setFloat(2, pojemnosc);
+            insertModel.setString(3, wersjaWyposazenia);
+            insertModel.setInt(4, rok);
+            insertModel.setInt(6, FABRYKA);
 
             selectMarkaModelu.setString(1, model);
             selectMarkaModelu.setString(2, marka);
@@ -102,27 +111,33 @@ public class DBManager {
                 ResultSet rs2 = selectModel.executeQuery();
                 if (rs2.next()) {
                     idModelu = rs2.getInt(1);
-                }else {
-                    insertModel.setInt(5,idMarkiModelu);
+                } else {
+                    insertModel.setInt(5, idMarkiModelu);
                     insertModel.executeUpdate();
                     ResultSet rs3 = selectNewModel.executeQuery();
                     rs3.next();
                     idModelu = rs3.getInt(1);
                 }
             } else {
-                insertMarkaModelu.setString(1,model);
-                insertMarkaModelu.setString(2,marka);
+                insertMarkaModelu.setString(1, model);
+                insertMarkaModelu.setString(2, marka);
                 insertMarkaModelu.executeUpdate();
                 ResultSet rs4 = selectMarkaModelu.executeQuery();
                 rs4.next();
                 idMarkiModelu = rs4.getInt(1);
-                insertModel.setInt(5,idMarkiModelu);
+                insertModel.setInt(5, idMarkiModelu);
                 insertModel.executeUpdate();
                 rs4 = selectNewModel.executeQuery();
+                rs4.next();
                 idModelu = rs4.getInt(1);
             }
-            insertCar.setInt(7,idModelu);
-            insertCar.executeUpdate();
+            if (carId <= 0) {
+                insertCar.setInt(7, idModelu);
+                insertCar.executeUpdate();
+            } else {
+                updateCar.setInt(7, idModelu);
+                updateCar.executeUpdate();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -189,6 +204,18 @@ public class DBManager {
         return employees;
     }
 
+    public void deleteEmployee(Integer id) {
+        try {
+            PreparedStatement deleteEmployeeStatement = connection.prepareStatement("delete from \"Pracownicy\" where \"ID_Pracownika\" = ?");
+            deleteEmployeeStatement.setInt(1, id);
+            deleteEmployeeStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public ArrayList<Customer> getCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
@@ -231,6 +258,76 @@ public class DBManager {
             e.printStackTrace();
         }
         return customers;
+    }
+
+    public void editCustomer(Integer id, String imie, String nazwisko, String ulica, String numerBudynku, String numerLokalu, String kodPocztowy, String miejscowosc, String kraj, String numerTel, String email, String pesel, String rabat) {
+        try {
+            PreparedStatement selectAdres = connection.prepareStatement("select \"ID_adresu\" from \"Adresy\" where \"Ulica\"=? and \"Numer_budynku\"=? and \"Numer_lokalu\"=? and \"Kod_pocztowy\"=? and \"Miejscowosc\"=? and \"Kraj\"=?");
+            PreparedStatement selectNewAdres = connection.prepareStatement("select max(\"ID_adresu\") from \"Adresy\"");
+            PreparedStatement insertAdres = connection.prepareStatement("insert into \"Adresy\" values (\"Adresy_SEQ\".nextval, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement insertKlient = connection.prepareStatement("insert into \"Klienci\" values (\"Klienci_SEQ\".nextval, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement updateKlient = connection.prepareStatement("update \"Klienci\" set \"Imie\"=?, \"Nazwisko\"=?, \"Rabat\"=?, \"Numer_telefonu\", \"email\"=?, \"Pesel\"=?, \"ID_adresu\"=? where \"ID_Klienta\"=?");
+
+            Integer idAdresu;
+
+            selectAdres.setString(1, ulica);
+            selectAdres.setString(2, numerBudynku);
+            selectAdres.setString(3, numerLokalu);
+            selectAdres.setString(4, kodPocztowy);
+            selectAdres.setString(5, miejscowosc);
+            selectAdres.setString(6, kraj);
+            ResultSet rs = selectAdres.executeQuery();
+            if(rs.next()){
+                idAdresu = rs.getInt(1);
+            }else {
+                insertAdres.setString(1,ulica);
+                insertAdres.setString(2,numerBudynku);
+                insertAdres.setString(3,numerLokalu);
+                insertAdres.setString(4, kodPocztowy);
+                insertAdres.setString(5,miejscowosc);
+                insertAdres.setString(6,kraj);
+                insertAdres.executeUpdate();
+                ResultSet rs2 = selectNewAdres.executeQuery();
+                rs2.next();
+                idAdresu = rs2.getInt(1);
+            }
+            if(id <= 0){
+                insertKlient.setString(1,imie);
+                insertKlient.setString(2,nazwisko);
+                insertKlient.setString(3,rabat);
+                insertKlient.setString(4,numerTel);
+                insertKlient.setString(5,email);
+                insertKlient.setString(6,pesel);
+                insertKlient.setInt(7, idAdresu);
+                insertKlient.executeUpdate();
+            }else {
+                updateKlient.setString(1,imie);
+                updateKlient.setString(2,nazwisko);
+                updateKlient.setString(3,rabat);
+                updateKlient.setString(4,numerTel);
+                updateKlient.setString(5,email);
+                updateKlient.setString(6,pesel);
+                updateKlient.setInt(7, idAdresu);
+                updateKlient.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteCustomer(Integer id) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("delete from \"Salony_Samochodowe_Klienci\" where \"ID_Klienta\" = ?");
+            PreparedStatement deleteCustomerStatement = connection.prepareStatement("delete from \"Klienci\" where \"ID_Klienta\" = ?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            deleteCustomerStatement.setInt(1, id);
+            deleteCustomerStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
