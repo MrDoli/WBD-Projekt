@@ -199,7 +199,6 @@ public class TablesController {
         status = status.concat("%");
         naSprzedaz = naSprzedaz.concat("%");
         doJazdyProbnej = doJazdyProbnej.concat("%");
-        System.out.print(marka+" / "+model+" / "+naped+" / "+pojemnosc+" / "+rok+" / "+status+" / "+naSprzedaz+" / "+doJazdyProbnej+" / ");
         ObservableList<Car> cars = FXCollections.observableArrayList(dbManager.findCars(marka, model, naped, pojemnosc, rok, status, naSprzedaz, doJazdyProbnej));
         carsTableView.setItems(cars);
     }
