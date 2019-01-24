@@ -216,15 +216,23 @@ public class DBManager {
     }
 
 
-    public ArrayList<Customer> getCustomers() {
+    public ArrayList<Customer> getCustomers(Integer customerId) {
         ArrayList<Customer> customers = new ArrayList<>();
         try {
             PreparedStatement selectAddressStatement;
             PreparedStatement selectCustomerStatement;
+            PreparedStatement selectOneCustomerStatement;
 
             selectCustomerStatement = connection.prepareStatement("select * from \"Klienci\"");
             selectAddressStatement = connection.prepareStatement("select * from \"Adresy\" where \"ID_adresu\" = ?");
-            ResultSet rs = selectCustomerStatement.executeQuery();
+            selectOneCustomerStatement = connection.prepareStatement("select * from \"Klienci\" where \"ID_Klienta\"=?");
+            ResultSet rs;
+            if (customerId <= 0) rs = selectCustomerStatement.executeQuery();
+            else {
+                selectOneCustomerStatement.setInt(1,customerId);
+                rs = selectOneCustomerStatement.executeQuery();
+            }
+
             while (rs.next()) {
                 Integer id = rs.getInt(1);
                 String imie = rs.getString(2);
@@ -277,38 +285,38 @@ public class DBManager {
             selectAdres.setString(5, miejscowosc);
             selectAdres.setString(6, kraj);
             ResultSet rs = selectAdres.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 idAdresu = rs.getInt(1);
-            }else {
-                insertAdres.setString(1,ulica);
-                insertAdres.setString(2,numerBudynku);
-                insertAdres.setString(3,numerLokalu);
+            } else {
+                insertAdres.setString(1, ulica);
+                insertAdres.setString(2, numerBudynku);
+                insertAdres.setString(3, numerLokalu);
                 insertAdres.setString(4, kodPocztowy);
-                insertAdres.setString(5,miejscowosc);
-                insertAdres.setString(6,kraj);
+                insertAdres.setString(5, miejscowosc);
+                insertAdres.setString(6, kraj);
                 insertAdres.executeUpdate();
                 ResultSet rs2 = selectNewAdres.executeQuery();
                 rs2.next();
                 idAdresu = rs2.getInt(1);
             }
-            if(id <= 0){
-                insertKlient.setString(1,imie);
-                insertKlient.setString(2,nazwisko);
-                insertKlient.setString(3,rabat);
-                insertKlient.setString(4,numerTel);
-                insertKlient.setString(5,email);
-                insertKlient.setString(6,pesel);
+            if (id <= 0) {
+                insertKlient.setString(1, imie);
+                insertKlient.setString(2, nazwisko);
+                insertKlient.setString(3, rabat);
+                insertKlient.setString(4, numerTel);
+                insertKlient.setString(5, email);
+                insertKlient.setString(6, pesel);
                 insertKlient.setInt(7, idAdresu);
                 insertKlient.executeUpdate();
-            }else {
-                updateKlient.setString(1,imie);
-                updateKlient.setString(2,nazwisko);
-                updateKlient.setString(3,rabat);
-                updateKlient.setString(4,numerTel);
-                updateKlient.setString(5,email);
-                updateKlient.setString(6,pesel);
+            } else {
+                updateKlient.setString(1, imie);
+                updateKlient.setString(2, nazwisko);
+                updateKlient.setString(3, rabat);
+                updateKlient.setString(4, numerTel);
+                updateKlient.setString(5, email);
+                updateKlient.setString(6, pesel);
                 updateKlient.setInt(7, idAdresu);
-                updateKlient.setInt(8,id);
+                updateKlient.setInt(8, id);
                 updateKlient.executeUpdate();
             }
 
