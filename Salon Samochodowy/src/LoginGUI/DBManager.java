@@ -158,6 +158,72 @@ public class DBManager {
         }
     }
 
+    public ArrayList<Car> findCars(String marka, String model, String rodzajNapedu, String pojemnosc, String rok, String status, String naSprzedaz, String doJazdyProbnej){
+        ArrayList<Car> cars = new ArrayList<>();
+
+        try{
+            PreparedStatement selectBrand_ModelStatement;
+            PreparedStatement selectModelStatement;
+
+            selectBrand_ModelStatement = connection.prepareStatement("select * from \"Marki_modeli\" where \"ID_marki_modelu\" = ?");
+            selectModelStatement = connection.prepareStatement("select * from \"Modele\" where \"ID_modelu\" = ?");
+            PreparedStatement findCars = connection.prepareStatement("select * from \"Samochody\" where \"Status\" like ? and \"Czy_na_sprzedaz\" like ? and \"Czy_do_jazdy_probnej\" like ? and \"ID_modelu\"=?");
+            PreparedStatement findModel = connection.prepareStatement("select * from \"Modele\" where \"Rodzaj_napedu\" like ? and \"Pojemnosc_silnika\" like ? and \"Rok_produkcji\" like ? and \"ID_marki_modelu\"=?");
+            PreparedStatement findMarkaModelu = connection.prepareStatement("select * from \"Marki_modeli\" where \"Marka\" like ? and \"Model\" like ?");
+
+            findMarkaModelu.setString(1, marka);
+            findMarkaModelu.setString(2,model);
+            findModel.setString(1, rodzajNapedu);
+            findModel.setString(2,pojemnosc);
+            findModel.setString(3,rok);
+            findCars.setString(1,status);
+            findCars.setString(2,naSprzedaz);
+            findCars.setString(3,doJazdyProbnej);
+
+
+            ResultSet rs = findMarkaModelu.executeQuery();
+            while (rs.next()){
+                findModel.setInt(4,rs.getInt(1));
+                ResultSet rs2 = findModel.executeQuery();
+                while (rs2.next()){
+                    findCars.setInt(4,rs2.getInt(1));
+                    ResultSet rs3 = findCars.executeQuery();
+                    while (rs3.next()){
+                        Integer id2 = rs3.getInt(1);
+                        String status2 = rs3.getString(2);
+                        String naSprzedaz2 = rs3.getString(3);
+                        String doJazdyProbnej2 = rs3.getString(4);
+                        Integer przebieg2 = rs3.getInt(5);
+                        Integer netto2 = rs3.getInt(6);
+                        Integer brutto2 = rs3.getInt(7);
+                        Integer idModelu2 = rs3.getInt(8);
+                        selectModelStatement.setInt(1, idModelu2);
+                        ResultSet rs4 = selectModelStatement.executeQuery();
+                        rs4.next();
+                        String naped2 = rs4.getString(2);
+                        Float pojemnosc2 = rs4.getFloat(3);
+                        String wersjaWyposazenia2 = rs4.getString(4);
+                        Integer rok2 = rs4.getInt(5);
+                        Integer idMarkiModelu2 = rs4.getInt(6);
+                        selectBrand_ModelStatement.setInt(1, idMarkiModelu2);
+                        rs4 = selectBrand_ModelStatement.executeQuery();
+                        String model2 = "";
+                        String marka2 = "";
+                        while (rs4.next()) {
+                            model2 = rs4.getString(2);
+                            marka2 = rs4.getString(3);
+                        }
+                        cars.add(new Car(id2, status2, naSprzedaz2, doJazdyProbnej2, przebieg2, netto2, brutto2, marka2, model2, naped2, pojemnosc2, wersjaWyposazenia2, rok2));
+                    }
+                }
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return cars;
+    }
+
     public ArrayList<Employee> getEmployees() {
         ArrayList<Employee> employees = new ArrayList<>();
         try {

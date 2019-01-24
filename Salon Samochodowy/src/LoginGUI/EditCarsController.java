@@ -94,6 +94,14 @@ public class EditCarsController {
         close();
     }
 
+//    private void errorWindow(){
+//        Alert alert = new Alert(Alert.AlertType.ERROR);
+//        alert.setTitle("Error Dialog");
+//        alert.setHeaderText("Aplikacja wykryła błąd");
+//        alert.setContentText("Sprawdź poprawność wpisanych danych");
+//        alert.showAndWait();
+//    }
+
     @FXML
     private void close() {
         Stage stage = (Stage) cancel.getScene().getWindow();
