@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
@@ -24,6 +25,9 @@ import java.io.IOException;
 public class TablesController {
 
     @FXML
+    private Tab employeesTab;
+
+    @FXML
     private Button carAddButton;
     @FXML
     private Button cancelButton;
@@ -31,12 +35,18 @@ public class TablesController {
     private Button carEditButton;
     @FXML
     private Button carDeleteButton;
-//    @FXML private Button customerAddButton;
-//    @FXML private Button customerEditButton;
-//    @FXML private Button customerDeleteButton;
-//    @FXML private Button employeeAddButton;
-//    @FXML private Button employeeEditButton;
-//    @FXML private Button employeeDeleteButton;
+    @FXML
+    private Button customerAddButton;
+    @FXML
+    private Button customerEditButton;
+    @FXML
+    private Button customerDeleteButton;
+    @FXML
+    private Button employeeAddButton;
+    @FXML
+    private Button employeeEditButton;
+    @FXML
+    private Button employeeDeleteButton;
 
     @FXML
     private TableView<Car> carsTableView;
@@ -108,7 +118,7 @@ public class TablesController {
     private TableColumn<Customer, String> customerAdres;
 
 
-    private DBManager dbManager = new DBManager();
+    private DBManager dbManager;
     private boolean isOwner;
     private Integer custId;
 
@@ -139,8 +149,8 @@ public class TablesController {
         getEmployees();
     }
 
-    private void getCustomers() {
-        ObservableList<Customer> customers = FXCollections.observableArrayList(dbManager.getCustomers());
+    private void getCustomers(Integer id) {
+        ObservableList<Customer> customers = FXCollections.observableArrayList(dbManager.getCustomers(id));
         customerTableView.setItems(customers);
     }
 
@@ -149,7 +159,7 @@ public class TablesController {
         if (customerTableView.getSelectionModel().getSelectedItems().isEmpty()) return;
 
         dbManager.deleteCustomer(customerTableView.getSelectionModel().getSelectedItem().getId());
-        getCustomers();
+        getCustomers(0);
     }
 
     @FXML
@@ -232,7 +242,7 @@ public class TablesController {
         }
 
         stage.showAndWait();
-        getCustomers();
+        getCustomers(0);
 
     }
 
@@ -256,6 +266,34 @@ public class TablesController {
 
     public void setCustId(Integer custId) {
         this.custId = custId;
+        carAddButton.setDisable(true);
+        carAddButton.setVisible(false);
+        carEditButton.setDisable(true);
+        carEditButton.setVisible(false);
+        carDeleteButton.setDisable(true);
+        carDeleteButton.setVisible(false);
+        employeeAddButton.setDisable(true);
+        employeeAddButton.setVisible(false);
+        employeeEditButton.setDisable(true);
+        employeeEditButton.setVisible(false);
+        employeeDeleteButton.setDisable(true);
+        employeeDeleteButton.setVisible(false);
+        customerAddButton.setDisable(true);
+        customerAddButton.setVisible(false);
+        //customerEditButton.setDisable(true);
+        //customerEditButton.setVisible(false);
+        customerDeleteButton.setDisable(true);
+        customerDeleteButton.setVisible(false);
+        employeesTab.setDisable(true);
+        //employeesTab.getContent().setVisible(false);
+        getCustomers(custId);
+
+    }
+
+    public void setOwner(boolean owner) {
+        isOwner = owner;
+        getCustomers(0);
+        getEmployees();
     }
 
     @FXML
@@ -296,8 +334,14 @@ public class TablesController {
         customerPesel.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPesel()));
         customerAdres.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getAdres()));
 
+       // getCars();
+        //getEmployees();
+        //getCustomers();
+    }
+
+
+    public void setDbManager(DBManager dbManager) {
+        this.dbManager = dbManager;
         getCars();
-        getEmployees();
-        getCustomers();
     }
 }
