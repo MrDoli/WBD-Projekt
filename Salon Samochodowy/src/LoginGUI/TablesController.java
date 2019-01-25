@@ -341,7 +341,7 @@ public class TablesController {
         customerDeleteButton.setDisable(true);
         customerDeleteButton.setVisible(false);
         employeesTab.setDisable(true);
-        //employeesTab.getContent().setVisible(false);
+        employeesTab.getTabPane().getTabs().remove(employeesTab);
         getCustomers(custId);
 
     }
